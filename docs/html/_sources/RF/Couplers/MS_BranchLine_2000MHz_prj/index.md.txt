@@ -34,7 +34,11 @@ lines are Z₀/√2 Ω and the shunt lines are Z₀ Ω.
 
 | Feature          |  Value        |
 |-----------|----------|
-| frequency | 2000 MHz |
+| Center frequency | [1800, 2200] MHz  |
+| Insertion Loss (I/Q) | 3.5 ± 0.5 dB |
+| I/Q phase difference | 90±2 deg |
+| Return Loss | <-12 dB |
+| I/Q Isolation | ><12 dB |
 
 ## Design Procedure
 
@@ -71,11 +75,83 @@ The ideal transmission lines are replaced by microstrip transmission lines. The 
 ### 2.1 MS: No Junctions nor Feed Lines
 The ideal transmission lines by microstrip lines. The junctions and the feed lines are not included at this stage. This approach will let to evaluate the impact of the junctions and also, the feedlines later.
 
+```{figure} images/2_MLIN/2_1_MLIN_No_Junctions/2_1_MLIN_No_Junctions_Schematic.png
+---
+class: with-border
+---
+
+Branch-Line with microstrip lines. Schematic
+```
+
+```{figure} images/2_MLIN/2_1_MLIN_No_Junctions/2_1_MLIN_No_Junctions_Magnitude.png
+---
+class: with-border
+---
+Branch-Line with microstrip lines. Magnitude response
+```
+
+
+```{figure} images/2_MLIN/2_1_MLIN_No_Junctions/2_1_MLIN_No_Junctions_DPhase.png
+---
+class: with-border
+---
+
+Branch-Line with microstrip lines. Phase difference between outputs
+```
+
 ### 2.2 MS: Add Junctions and Feed Lines
 The tee junctions and the feed lines are added. Notice that the tee junctions pull the center frequency down. The feed lines have no effect on the response as they are 50 Ω lines, they only add some insertion loss.
 
+```{figure} images/2_MLIN/2_2_MLIN_with_Junctions/2_2_MLIN_with_Junctions_Schematic.png
+---
+class: with-border
+---
+
+Branch-Line with microstrip lines. Schematic
+```
+
+```{figure} images/2_MLIN/2_2_MLIN_with_Junctions/2_2_MLIN_with_Junctions_Magnitude.png
+---
+class: with-border
+---
+Branch-Line with microstrip lines. Magnitude response
+```
+
+
+```{figure} images/2_MLIN/2_2_MLIN_with_Junctions/2_2_MLIN_with_Junctions_DPhase.png
+---
+class: with-border
+---
+
+Branch-Line with microstrip lines. Phase difference between outputs
+```
+
 ### 2.3 MS: Fine Tuning
-The loading of the junctions need to be corrected to have the Branch-Line coupler working at 2000 MHz. The circuit variables are tuned for this
+The loading of the junctions need to be corrected to have the Branch-Line coupler working at 2000 MHz. The circuit variables are tuned for this.
+
+```{figure} images/2_MLIN/2_3_MLIN_FineTuned/2_3_MLIN_FineTuned_Schematic.png
+---
+class: with-border
+---
+
+Fined-tuned Branch-Line coupler (MS). Schematic
+```
+
+```{figure} images/2_MLIN/2_3_MLIN_FineTuned/2_3_MLIN_FineTuned_Magnitude.png
+---
+class: with-border
+---
+Fined-tuned Branch-Line coupler (MS). Magnitude response
+```
+
+
+```{figure} images/2_MLIN/2_3_MLIN_FineTuned/2_3_MLIN_FineTuned_DPhase.png
+---
+class: with-border
+---
+
+Fined-tuned Branch-Line coupler (MS). Phase difference between outputs
+```
 
 ### 3. EM simulation
 Once the microstrip model is good enough, then it's convenient to validate it with an EM tool. [EMerge software](https://www.emerge-software.com/) is particularly well suited for this. The reader is encourage to install [EMerge from GitHub](https://github.com/FennisRobert/EMerge) and give it a try.
@@ -98,12 +174,60 @@ And this is the Python script for running the simulation:
 </div>
 ```
 
+```{figure} images/3_EM/Branch-Line-3DView.png
+---
+class: with-border
+---
+
+EMerge 3D model view
+```
+
+```{figure} images/3_EM/3_1_FirstApproach/3_1_FirstApproach_Dphase.png
+---
+class: with-border
+---
+
+EMerge FEM simulation. Phase difference between outputs
+```
+
 ### 3.1 Use design variables for 2.2
 First, the system is modelled using the design variables obtained from step 2.2 as the input
+
+```{figure} images/3_EM/3_1_FirstApproach/3_1_FirstApproach_Magnitude.png
+---
+class: with-border
+---
+
+EMerge FEM simulation. Magnitude response.
+```
+
+```{figure} images/3_EM/3_1_FirstApproach/3_1_FirstApproach_Dphase.png
+---
+class: with-border
+---
+
+EMerge FEM simulation. Phase difference between outputs
+```
 
 
 ### 3.2 Fine-tuning
 The reader may notice that the center frequency of the Branch-Line coupler is shifted towards high frequencies, so some retuning is needed.
+
+```{figure} images/3_EM/3_2_FineTuning/3_2_FineTuning_Magnitude.png
+---
+class: with-border
+---
+
+EMerge FEM simulation. Magnitude response.
+```
+
+```{figure} images/3_EM/3_2_FineTuning/3_2_FineTuning_Dphase.png
+---
+class: with-border
+---
+
+EMerge FEM simulation. Phase difference between outputs
+```
 
 
 ## Substrate documentation

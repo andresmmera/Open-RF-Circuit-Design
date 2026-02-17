@@ -32,6 +32,25 @@ ax1.plot(f_MHz, dB(S21), label='S21 (in-phase)',     lw=1.8, color='r')  # red
 ax1.plot(f_MHz, dB(S41), label='S41 (quadrature)',   lw=1.8, color='g')  # green
 ax1.plot(f_MHz, dB(S42), label='S42 (isolation bt/ outputs)',     lw=1.8, color='k')  # black
 ax1.axvline(f0, color='gray', ls='--', lw=1, label=f'f₀ = {f0} MHz')
+
+# Marker: In-phase path IL @ f0
+idx_f0    = np.argmin(np.abs(f_MHz - f0))
+mkr_at_f0  = dB(S21)[idx_f0]
+ax1.annotate(f'In-Phase IL = {mkr_at_f0:.1f} dB',
+             xy=(f0, mkr_at_f0),
+             xytext=(f0-300, mkr_at_f0+2),
+             arrowprops=dict(arrowstyle='->', color='black'),
+             fontsize=10)
+
+# Marker: Quadrature path IL @ f0
+idx_f0    = np.argmin(np.abs(f_MHz - f0))
+mkr_at_f0  = dB(S41)[idx_f0]
+ax1.annotate(f'Quadrature IL = {mkr_at_f0:.1f} dB',
+             xy=(f0, mkr_at_f0),
+             xytext=(f0-300, mkr_at_f0-4),
+             arrowprops=dict(arrowstyle='->', color='black'),
+             fontsize=10)
+
 ax1.set_xlabel('Frequency [MHz]')
 ax1.set_ylabel('Magnitude [dB]')
 ax1.set_title(f'{project_name} — S-parameters')

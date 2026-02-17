@@ -1,6 +1,6 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=-926,-427,2395,1331,0.531287,0,36>
+  <View=-783,-369,2142,1226,0.784939,552,206>
   <Grid=10,10,1>
   <DataSet=3_BranchLine_EMerge_1st_approach.dat>
   <DataDisplay=3_BranchLine_EMerge_1st_approach.dpl>
@@ -22,7 +22,7 @@
 <Components>
   <Eqn Eqn1 1 450 770 -28 15 0 0 "S11_dB=dB(S[1,1])" 1 "S21_dB=dB(S[2,1])" 1 "S31_dB=dB(S[3,1])" 1 "S32_dB=dB(S[3,2])" 1 "yes" 0>
   <.SP SP1 1 90 770 0 56 0 0 "log" 1 "1500 MHz" 1 "2500 MHz" 1 "200" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0>
-  <Eqn Eqn3 1 620 900 -32 18 0 0 "mm=1e-3" 1 "yes" 0>
+  <Eqn Eqn3 1 620 740 -32 18 0 0 "mm=1e-3" 1 "yes" 0>
   <SUBST Subst1 1 280 790 -30 24 0 0 "3.55" 1 "0.508mm" 1 "32um" 1 "0.0027" 1 "2.43902e-08" 1 "1.5e-07" 1>
   <Port P1 5 1430 50 -23 12 0 0 "1" 0 "analog" 0>
   <Pac T1 1 130 280 -100 -20 0 1 "1" 1 "50.0Ohm" 1 "0 dBm" 0 "1 MHz" 0 "26.85" 0 "true" 0>
@@ -34,7 +34,7 @@
   <R R1 1 160 360 23 -13 0 1 "50.0Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "US" 0>
   <GND * 1 160 390 0 0 0 0>
   <Sub SUB1 5 220 260 30 54 0 0 "3_BranchLine_EMerge_1st_approach_data.sch" 0>
-  <Eqn Eqn4 1 630 750 -28 15 0 0 "S21_phase=(180/pi)*unwrap(angle(S[2,1]))" 1 "S31_phase=(180/pi)*unwrap(angle(S[3,1]))" 1 "d_phase=abs(S21_phase-S31_phase)" 1 "yes" 0>
+  <Eqn Eqn4 1 620 850 -28 15 0 0 "S21_phase=(180/pi)*unwrap(angle(S[2,1]))" 1 "S31_phase=(180/pi)*unwrap(angle(S[3,1]))" 1 "d_phase=abs(S21_phase-S31_phase)" 1 "yes" 0>
 </Components>
 <Wires>
   <130 230 130 250 "" 0 0 0 "">
@@ -50,13 +50,15 @@
   <Rect 937 369 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 -30 5 5 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"S11_dB" #0000ff 1 3 0 0 0>
 	<"S21_dB" #ff0000 1 3 0 0 0>
-	  <Mkr 1.9894e+09/0/0 300 -270 3 0 0>
-	<"S31_dB" #ff00ff 1 3 0 0 0>
+	  <Mkr 1.9894e+09 300 -270 3 0 0>
+	<"S31_dB" #005500 1 3 0 0 0>
 	<"S32_dB" #000000 1 3 0 0 0>
   </Rect>
-  <Rect 947 779 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 -270 90 270 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
+  <Rect 937 779 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 80 2 100 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"d_phase" #0000ff 0 3 0 0 0>
-	  <Mkr 1.99964e+09/0/0 305 -210 3 0 0>
+	  <Mkr 1.99964e+09 197 -270 3 0 0>
+	  <Mkr 1.79988e+09 45 -270 3 0 0>
+	  <Mkr 2.19887e+09 342 -97 3 0 0>
   </Rect>
 </Diagrams>
 <Paintings>

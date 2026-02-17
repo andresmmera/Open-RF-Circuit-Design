@@ -24,7 +24,8 @@ MHz = 1e6          # Hz
 # Substrate / material
 # ---------------------------------------------------------------------------
 er  = 3.55         # RO4003C relative permittivity
-th  = 0.508        # [mm] substrate thickness
+th  = 0.508        # [mm] (20 mil) Substrate thickness
+tand = 0.0029      # Substrate tand
 
 # ---------------------------------------------------------------------------
 # Center frequency
@@ -33,7 +34,7 @@ f0_MHz = 2000;
 f0 = f0_MHz*MHz    # centre frequency (Hz)
 
 # ---------------------------------------------------------------------------
-# Microstrip line parameters
+# Branch-Line circuital model parameters
 # ---------------------------------------------------------------------------
 W50  = 1.1         # [mm] Trace width for 50-Ohm arms
 W35  = 1.85        # [mm] Trace width for 35-Ohm arms
@@ -59,7 +60,7 @@ n_points = 40
 # ---------------------------------------------------------------------------
 # Material and PCB layouter
 # ---------------------------------------------------------------------------
-mat = em.Material(er=er, color="#488343", opacity=0.4)
+mat = em.Material(er=er, tand=tand, color="#488343", opacity=0.4)
 pcb = em.geo.PCBNew(th, unit=mm, material=mat)
 
 # ---------------------------------------------------------------------------
@@ -166,6 +167,7 @@ model.mesher.set_face_size(p4, 0.5 * mm)
 model.generate_mesh()
 #model.view(plot_mesh=True)
 model.view(plot_mesh=False)
+
 # ---------------------------------------------------------------------------
 # Boundary conditions
 # ---------------------------------------------------------------------------
@@ -197,8 +199,9 @@ S42 = grid.S(4, 2)
 # ---------------------------------------------------------------------------
 # Vector fitting — supersampled plot
 # ---------------------------------------------------------------------------
-f_fit   = np.linspace(1.0e9, 3.0e9, 2001)
-f_MHz = f_fit / 1e6    # Used for displaying the graphs
+n_supersamples = 2001
+f_fit   = np.linspace(f_start, f_stop, n_supersamples)
+f_MHz = f_fit / 1e6    # Scale for displaying the graphs
 S11_fit = grid.model_S(1, 1, f_fit)
 S21_fit = grid.model_S(2, 1, f_fit)
 S31_fit = grid.model_S(3, 1, f_fit)

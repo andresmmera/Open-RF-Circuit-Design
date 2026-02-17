@@ -2,7 +2,23 @@
 
 ## Introduction
 
-This repo contains a number of projects I developed for my self-learning using **Qucs-S** and **EMerge** software. Both of them are open-source, as this project. Although I am mainly interested in RF engineering, I may collect here some "General Electronics" designs.
+This repository showcases self-learning projects in electronics and RF engineering. Contributions or suggestions are welcome. Feel free to reach me out at [andresmmera@protonmail.com](mailto:andresmmera@protonmail.com)
+
+While my primary interest is RF engineering, this repo also includes general electronics designs for experimentation and learning. Bug reports or improvement ideas are appreciated.
+
+
+### Open-Source RF Engineering Software
+
+The examples in this repo use the following tools
+
+|      Tool        |  Licensing   | Notes |
+|--- |---------------------|---|
+|[Qucs-S](https://ra3xdh.github.io/)| GPL v2| [GitHub Repo](https://github.com/ra3xdh/qucs_s) |
+|[Qucs-S S-Parameter Viewer](https://andresmmera.github.io/qucs-s-spar-viewer/)| GPL v3| [GitHub Repo](https://github.com/andresmmera/qucs-s-spar-viewer) |
+|[EMerge](https://www.emerge-software.com)| GPL v2| [GitHub Repo](https://github.com/FennisRobert/EMerge) |
+|[Sonnet Lite](https://www.sonnetsoftware.com/products/lite/)| GPL v2| Proprietary software. Free license |
+
+
 
 ## RF Projects
 

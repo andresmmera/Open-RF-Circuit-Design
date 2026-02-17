@@ -77,7 +77,7 @@ html_extra_path = RF_extra_path
 theme_options = ThemeOptions(
     show_prev_next=True,
     awesome_external_links=True,
-    main_nav_links={"Qucs-S SP Viewer": "https://andresmmera.github.io/qucs-s-spar-viewer/", "Qucs-S Docs": "https://qucs-s-help.readthedocs.io", "Main QUCS-S Site": "https://ra3xdh.github.io/", "EMerge Project": "https://emerge-software.com"},
+    main_nav_links={"Qucs-S SP Viewer": "https://andresmmera.github.io/qucs-s-spar-viewer/", "Qucs-S Docs": "https://qucs-s-help.readthedocs.io", "Qucs-S Site": "https://ra3xdh.github.io/", "EMerge Software": "https://emerge-software.com"},
     extra_header_link_icons={
         "repository on GitHub": {
             "link": "https://github.com/andresmmera/qucs-s-spar-viewer",

@@ -1,6 +1,6 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=-465,-285,1906,1190,0.661253,0,120>
+  <View=-495,-313,1937,1013,0.644796,0,0>
   <Grid=10,10,1>
   <DataSet=2_2_BranchLine_MLIN_JunctionsFees.dat>
   <DataDisplay=2_2_BranchLine_MLIN_JunctionsFees.dpl>
@@ -33,7 +33,7 @@
   <Eqn Eqn3 1 620 900 -32 18 0 0 "mm=1e-3" 1 "yes" 0>
   <SUBST Subst1 1 280 790 -30 24 0 0 "3.55" 1 "0.508mm" 1 "32um" 1 "0.0027" 1 "2.43902e-08" 1 "1.5e-07" 1>
   <Port P1 5 1440 50 -23 12 0 0 "1" 0 "analog" 0>
-  <Eqn Variablesmm 1 680 203 -32 18 0 0 "W50_mm=W50*mm" 1 "L50_mm=L50*mm" 1 "W35_mm=W35*mm" 1 "L35_mm=L35*mm" 1 "Lfeed_mm=Lfeed*mm" 1 "yes" 0>
+  <Eqn Variablesmm 1 670 153 -32 18 0 0 "W50_mm=W50*mm" 1 "L50_mm=L50*mm" 1 "W35_mm=W35*mm" 1 "L35_mm=L35*mm" 1 "Lfeed_mm=Lfeed*mm" 1 "yes" 0>
   <MLIN MLIN1 1 420 410 -35 -81 1 2 "Subst1" 0 "W35_mm" 1 "L35_mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "DC" 0>
   <MLIN MLIN2 1 420 540 -31 24 1 2 "Subst1" 0 "W35_mm" 1 "L35_mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "DC" 0>
   <MLIN MLIN4 1 540 470 20 -30 1 1 "Subst1" 0 "W50_mm" 1 "L50_mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "DC" 0>
@@ -46,8 +46,8 @@
   <MTEE MS2 5 540 410 -26 -125 1 2 "Subst1" 0 "W50_mm" 0 "W35_mm" 0 "W50_mm" 0 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
   <MTEE MS3 5 540 540 -26 34 0 2 "Subst1" 0 "W50_mm" 0 "W35_mm" 0 "W50_mm" 0 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
   <MTEE MS4 5 300 540 -26 15 1 0 "Subst1" 0 "W50_mm" 0 "W35_mm" 0 "W50_mm" 0 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
-  <Eqn Eqn4 1 620 780 -28 15 0 0 "S21_phase=(180/pi)*unwrap(angle(S[2,1]))" 1 "S31_phase=(180/pi)*unwrap(angle(S[3,1]))" 1 "d_phase=abs(S21_phase-S31_phase)" 1 "yes" 0>
-  <Eqn Variables1 1 550 203 -32 18 0 0 "W50=1.1" 1 "L50=22.6" 1 "W35=1.87" 1 "L35=22.1" 1 "Lfeed=5" 1 "yes" 0>
+  <Eqn Eqn4 1 730 870 -28 15 0 0 "S21_phase=(180/pi)*unwrap(angle(S[2,1]))" 1 "S31_phase=(180/pi)*unwrap(angle(S[3,1]))" 1 "d_phase=abs(S21_phase-S31_phase)" 1 "yes" 0>
+  <Eqn Variables1 1 570 153 -32 18 0 0 "W50=1.1" 1 "L50=22.6" 1 "W35=1.87" 1 "L35=22.1" 1 "Lfeed=5" 1 "yes" 0>
 </Components>
 <Wires>
   <140 410 140 430 "" 0 0 0 "">
@@ -73,12 +73,15 @@
   <Rect 937 369 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 -30 5 5 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"S11_dB" #0000ff 1 3 0 0 0>
 	<"S21_dB" #ff0000 1 3 0 0 0>
-	<"S31_dB" #ff00ff 1 3 0 0 0>
+	  <Mkr 1.99964e+09 307 -273 3 0 0>
+	<"S31_dB" #005500 1 3 0 0 0>
 	<"S32_dB" #000000 1 3 0 0 0>
   </Rect>
-  <Rect 937 779 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 -270 90 270 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
+  <Rect 937 799 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 80 2 100 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"d_phase" #0000ff 0 3 0 0 0>
-	  <Mkr 1.99964e+09 223 -245 3 0 0>
+	  <Mkr 1.99964e+09 197 -270 3 0 0>
+	  <Mkr 1.79988e+09 45 -270 3 0 0>
+	  <Mkr 2.19887e+09 342 -97 3 0 0>
   </Rect>
 </Diagrams>
 <Paintings>

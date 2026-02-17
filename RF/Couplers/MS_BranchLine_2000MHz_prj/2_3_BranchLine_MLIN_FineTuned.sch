@@ -1,6 +1,6 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=-473,-285,1935,1028,0.651181,0,0>
+  <View=-504,-313,1964,1033,0.635215,0,0>
   <Grid=10,10,1>
   <DataSet=2_3_BranchLine_MLIN_FineTuned.dat>
   <DataDisplay=2_3_BranchLine_MLIN_FineTuned.dpl>
@@ -30,7 +30,7 @@
   <GND * 1 740 660 0 0 0 0>
   <R R1 1 180 630 -115 -21 0 1 "50.0Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "US" 0>
   <GND * 1 180 660 0 0 0 0>
-  <Eqn Eqn2 1 640 920 -32 18 0 0 "mm=1e-3" 1 "yes" 0>
+  <Eqn Eqn2 1 650 890 -32 18 0 0 "mm=1e-3" 1 "yes" 0>
   <SUBST Subst1 1 300 810 -30 24 0 0 "3.55" 1 "0.508mm" 1 "32um" 1 "0.0027" 1 "2.43902e-08" 1 "1.5e-07" 1>
   <Port P1 5 1460 70 -23 12 0 0 "1" 0 "analog" 0>
   <Eqn Variablesmm1 1 680 213 -32 18 0 0 "W50_mm=W50*mm" 1 "L50_mm=L50*mm" 1 "W35_mm=W35*mm" 1 "L35_mm=L35*mm" 1 "Lfeed_mm=Lfeed*mm" 1 "yes" 0>
@@ -46,7 +46,7 @@
   <MTEE MS2 5 560 430 -26 -125 1 2 "Subst1" 0 "W50_mm" 0 "W35_mm" 0 "W50_mm" 0 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
   <MTEE MS3 5 560 560 -26 34 0 2 "Subst1" 0 "W50_mm" 0 "W35_mm" 0 "W50_mm" 0 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
   <MTEE MS4 5 320 560 -26 15 1 0 "Subst1" 0 "W50_mm" 0 "W35_mm" 0 "W50_mm" 0 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
-  <Eqn Eqn3 1 640 800 -28 15 0 0 "S21_phase=(180/pi)*unwrap(angle(S[2,1]))" 1 "S31_phase=(180/pi)*unwrap(angle(S[3,1]))" 1 "d_phase=abs(S21_phase-S31_phase)" 1 "yes" 0>
+  <Eqn Eqn3 1 770 890 -28 15 0 0 "S21_phase=(180/pi)*unwrap(angle(S[2,1]))" 1 "S31_phase=(180/pi)*unwrap(angle(S[3,1]))" 1 "d_phase=abs(S21_phase-S31_phase)" 1 "yes" 0>
   <Eqn Variables1 1 520 213 -32 18 0 0 "W50=1.1" 1 "L50=21.600" 1 "W35=1.87" 1 "L35=21.600" 1 "Lfeed=5" 1 "yes" 0>
 </Components>
 <Wires>
@@ -73,12 +73,15 @@
   <Rect 957 389 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 -30 5 5 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"S11_dB" #0000ff 1 3 0 0 0>
 	<"S21_dB" #ff0000 1 3 0 0 0>
-	<"S31_dB" #ff00ff 1 3 0 0 0>
+	  <Mkr 1.99964e+09 305 -273 3 0 0>
+	<"S31_dB" #005500 1 3 0 0 0>
 	<"S32_dB" #000000 1 3 0 0 0>
   </Rect>
-  <Rect 957 799 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 -270 90 270 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
+  <Rect 957 829 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 80 2 100 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"d_phase" #0000ff 0 3 0 0 0>
-	  <Mkr 1.99964e+09 223 -245 3 0 0>
+	  <Mkr 1.99964e+09 197 -270 3 0 0>
+	  <Mkr 1.79988e+09 45 -270 3 0 0>
+	  <Mkr 2.19887e+09 342 -97 3 0 0>
   </Rect>
 </Diagrams>
 <Paintings>

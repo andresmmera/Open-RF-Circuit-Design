@@ -1,6 +1,6 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=-470,-285,1909,1011,0.797648,118,178>
+  <View=-505,-313,1945,1023,0.63997,0,0>
   <Grid=10,10,1>
   <DataSet=2_1_BranchLine_MLIN.dat>
   <DataDisplay=2_1_BranchLine_MLIN.dpl>
@@ -39,7 +39,7 @@
   <MLIN MLIN4 1 540 480 20 -30 1 1 "Subst1" 0 "W50_mm" 1 "L50_mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "DC" 0>
   <MLIN MLIN3 1 300 480 20 -30 1 1 "Subst1" 0 "W50_mm" 1 "L50_mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "DC" 0>
   <Eqn Variables 1 540 163 -32 18 0 0 "W50=1.1" 1 "L50=22.6" 1 "W35=1.87" 1 "L35=22.1" 1 "Lfeed=1" 1 "yes" 0>
-  <Eqn Eqn4 1 640 770 -28 15 0 0 "S21_phase=(180/pi)*unwrap(angle(S[2,1]))" 1 "S31_phase=(180/pi)*unwrap(angle(S[3,1]))" 1 "d_phase=abs(S21_phase-S31_phase)" 1 "yes" 0>
+  <Eqn Eqn4 1 730 880 -28 15 0 0 "S21_phase=(180/pi)*unwrap(angle(S[2,1]))" 1 "S31_phase=(180/pi)*unwrap(angle(S[3,1]))" 1 "d_phase=abs(S21_phase-S31_phase)" 1 "yes" 0>
 </Components>
 <Wires>
   <180 420 300 420 "" 0 0 0 "">
@@ -62,12 +62,15 @@
   <Rect 937 369 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 -30 5 5 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"S11_dB" #0000ff 1 3 0 0 0>
 	<"S21_dB" #ff0000 1 3 0 0 0>
-	<"S31_dB" #ff00ff 1 3 0 0 0>
+	  <Mkr 1.99964e+09 305 -273 3 0 0>
+	<"S31_dB" #005500 1 3 0 0 0>
 	<"S32_dB" #000000 1 3 0 0 0>
   </Rect>
-  <Rect 947 779 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 -270 90 270 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
+  <Rect 947 809 490 278 3 #c0c0c0 1 00 1 1.5e+09 1e+08 2.5e+09 0 80 2 100 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"d_phase" #0000ff 0 3 0 0 0>
-	  <Mkr 1.99451e+09 302 -245 3 0 0>
+	  <Mkr 1.99964e+09 197 -270 3 0 0>
+	  <Mkr 1.79988e+09 45 -270 3 0 0>
+	  <Mkr 2.19887e+09 342 -97 3 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
