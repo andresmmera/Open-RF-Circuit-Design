@@ -1,0 +1,13 @@
+How to install build the documentation?
+
+1) Create Python virtual environment
+	python3 -m venv docs-venv
+
+2) Activate virtual environment
+	source docs-venv/bin/activate
+
+3) Install the required Python packages to build the documentation 
+	pip3 install -r requirements.txt
+	
+4) Build Sphinx documentation
+	sphinx-build -M html . HTMLdocs
