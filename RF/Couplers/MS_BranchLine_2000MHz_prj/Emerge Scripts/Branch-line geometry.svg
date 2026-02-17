@@ -9,6 +9,9 @@
    id="svg5"
    sodipodi:docname="Branch-line geometry.svg"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   inkscape:export-filename="Branch-line geometry.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,14 +27,14 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.0973349"
-     inkscape:cx="278.85744"
-     inkscape:cy="245.59503"
-     inkscape:window-width="960"
+     inkscape:zoom="1.5518659"
+     inkscape:cx="229.40126"
+     inkscape:cy="207.81435"
+     inkscape:window-width="1920"
      inkscape:window-height="1008"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
      id="defs2">
@@ -846,5 +849,93 @@
          style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
          x="109.27715"
          y="142.94458">(x_P4, y_P4)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       x="87.575989"
+       y="74.916077"
+       id="text1520-6-9-3"><tspan
+         sodipodi:role="line"
+         id="tspan1518-2-37-6"
+         style="fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+         x="87.575989"
+         y="74.916077">50 Ω</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       x="88.261063"
+       y="125.21168"
+       id="text1520-6-9-3-7"><tspan
+         sodipodi:role="line"
+         id="tspan1518-2-37-6-5"
+         style="fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+         x="88.261063"
+         y="125.21168">50 Ω</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       x="62.896011"
+       y="65.920601"
+       id="text1520-6-9-3-3"><tspan
+         sodipodi:role="line"
+         id="tspan1518-2-37-6-56"
+         style="fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+         x="62.896011"
+         y="65.920601">50 Ω</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       x="114.82981"
+       y="65.932838"
+       id="text1520-6-9-3-3-2"><tspan
+         sodipodi:role="line"
+         id="tspan1518-2-37-6-56-9"
+         style="fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+         x="114.82981"
+         y="65.932838">50 Ω</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       x="114.31932"
+       y="134.16071"
+       id="text1520-6-9-3-3-1"><tspan
+         sodipodi:role="line"
+         id="tspan1518-2-37-6-56-2"
+         style="fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+         x="114.31932"
+         y="134.16071">50 Ω</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       x="62.817833"
+       y="134.03497"
+       id="text1520-6-9-3-3-7"><tspan
+         sodipodi:role="line"
+         id="tspan1518-2-37-6-56-0"
+         style="fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+         x="62.817833"
+         y="134.03497">50 Ω</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       x="61.344307"
+       y="105.86366"
+       id="text1520-6-9-3-3-9"><tspan
+         sodipodi:role="line"
+         id="tspan1518-2-37-6-56-3"
+         style="fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+         x="61.344307"
+         y="105.86366">35 Ω</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       x="116.78542"
+       y="105.63808"
+       id="text1520-6-9-3-3-9-6"><tspan
+         sodipodi:role="line"
+         id="tspan1518-2-37-6-56-3-0"
+         style="fill:#000cff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+         x="116.78542"
+         y="105.63808">35 Ω</tspan></text>
   </g>
 </svg>

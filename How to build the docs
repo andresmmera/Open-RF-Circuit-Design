@@ -10,4 +10,7 @@ How to install build the documentation?
 	pip3 install -r requirements.txt
 	
 4) Build Sphinx documentation
-	sphinx-build -M html . HTMLdocs
+	sphinx-build -M html . docs
+
+5) Open a web browser
+	firefox ./docs/html/index.html

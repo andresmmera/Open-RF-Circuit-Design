@@ -20,6 +20,7 @@ author = 'Andrés Martínez Mera'
 
 extensions = [
     'myst_parser',
+    'sphinx.ext.githubpages',
     #'sphinx-tags',
 ]
 
@@ -41,7 +42,7 @@ templates_path = ['_templates']
 # This can be very confusing for users, obviously.
 # I'm choosing to get around this by changing the extension of "non public-facing" files to .exclude.md or .exclude.rst.
 # This setting just makes Sphinx respect that (at all levels of the folder hierarchy).
-exclude_patterns = ['**/*.exclude.md', '**/*.exclude.rst']
+exclude_patterns = ['_build', 'docs-venv', '**/.git']
 
 # This makes the EPUB output show all the URLs as footnotes, rather than directly inline where they're referenced.
 # Cuts down on clutter factor.
@@ -56,6 +57,22 @@ html_title = project # This keeps the site from saying "QUCS-S Documentation doc
 html_theme = 'sphinxawesome_theme'
 html_static_path = [ ]
 # html_static_path = ['_static']
+html_baseurl = "https://andresmmera.github.io/Open-RF-Circuit-Design/"
+
+
+# Embedded PDFs. They need to be copied to the HTML output
+
+
+MS_Coupler_2000MHz_docs = [
+    'RF/Couplers/MS_BranchLine_2000MHz_prj/RO4000 Laminates RO4003C and RO4350B - Data Sheet.pdf',
+
+    ]
+
+couplers_extra_path = MS_Coupler_2000MHz_docs
+
+RF_extra_path = couplers_extra_path
+
+html_extra_path = RF_extra_path
 
 theme_options = ThemeOptions(
     show_prev_next=True,
