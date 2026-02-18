@@ -2,8 +2,8 @@
 <Properties>
   <View=-614,40,1644,1271,0.694557,0,0>
   <Grid=10,10,1>
-  <DataSet=1.README.dat>
-  <DataDisplay=1.README.dpl>
+  <DataSet=1_README.dat>
+  <DataDisplay=1_README.dpl>
   <OpenDisplay=0>
   <Script=README.m>
   <RunScript=0>
@@ -16,10 +16,11 @@
 <Symbol>
 </Symbol>
 <Components>
-  <Sub SUB6 5 130 420 260 -16 0 0 "Sonnet_Simulation.sch" 0>
-  <Sub SUB7 5 130 520 240 -16 0 0 "EMerge_Simulation.sch" 0>
-  <Sub SUB8 5 590 400 180 -16 0 0 "Results.sch" 0>
-  <Sub SUB5 5 160 320 230 -16 0 0 "MS_models.sch" 0>
+  <Sub SUB9 5 180 320 230 -16 0 0 "2_1_MS_models_Simulation.sch" 0>
+  <Sub SUB13 5 150 420 240 -16 0 0 "2_2_0_EMerge_Simulation.sch" 0>
+  <Sub SUB11 5 150 510 260 -16 0 0 "2_3_Sonnet_Simulation.sch" 0>
+  <Sub SUB12 5 580 410 180 -16 0 0 "3_Results.sch" 0>
+  <Sub SUB14 5 550 620 340 -16 0 0 "2_2_1_EMerge_Simulation_FineTuned.sch" 0>
 </Components>
 <Wires>
 </Wires>
@@ -52,4 +53,5 @@
   <Line 440 280 0 260 #000000 1 1>
   <Line 440 540 -20 20 #000000 1 1>
   <Arrow 460 410 60 0 20 8 #000000 1 1 0>
+  <Text 600 540 15 #000000 0 "Final design">
 </Paintings>

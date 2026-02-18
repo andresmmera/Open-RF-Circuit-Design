@@ -26,5 +26,5 @@ The examples in this repo use the following tools
 
 | #  |      Project        | Frequency   | Notes    |
 |--- |---------------------|-------------|---------------------|
-| 01 | [Directional Coupler](/RF/Couplers/MS_Coupler_prj/index)| 2000 MHz    | Microstrip. RO4003C |
+| 01 | [Directional Coupler](/RF/Couplers/MS_Coupler_2000MHz_prj/index)| 2000 MHz    | Microstrip. RO4003C |
 | 02 | [Branch-Line](/RF/Couplers/MS_BranchLine_2000MHz_prj/index)| 2000 MHz    | Microstrip. RO4003C |

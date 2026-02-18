@@ -34,11 +34,11 @@ lines are Z₀/√2 Ω and the shunt lines are Z₀ Ω.
 
 | Feature          |  Value        |
 |-----------|----------|
-| Center frequency | [1800, 2200] MHz  |
+| Band | [1800, 2200] MHz  |
 | Insertion Loss (I/Q) | 3.5 ± 0.5 dB |
 | I/Q phase difference | 90±2 deg |
 | Return Loss | <-12 dB |
-| I/Q Isolation | ><12 dB |
+| I/Q Isolation | >12 dB |
 
 ## Design Procedure
 
@@ -227,16 +227,4 @@ class: with-border
 ---
 
 EMerge FEM simulation. Phase difference between outputs
-```
-
-
-## Substrate documentation
-```{raw} html
-<iframe
-  src="../../../RO4000%20Laminates%20RO4003C%20and%20RO4350B%20-%20Data%20Sheet.pdf"
-  width="100%"
-  height="600px"
-  style="border: 1px solid #ccc; border-radius: 6px;">
-  <a href="../../../RO4000%20Laminates%20RO4003C%20and%20RO4350B%20-%20Data%20Sheet.pdf">Download PDF</a>
-</iframe>
 ```

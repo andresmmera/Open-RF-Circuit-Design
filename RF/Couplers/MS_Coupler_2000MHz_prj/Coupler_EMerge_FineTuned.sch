@@ -2,8 +2,8 @@
 <Properties>
   <View=-13,93,702,484,2.19231,0,0>
   <Grid=10,10,1>
-  <DataSet=Coupler_EMerge.dat>
-  <DataDisplay=Coupler_EMerge.dpl>
+  <DataSet=Coupler_EMerge_FineTuned.dat>
+  <DataDisplay=Coupler_EMerge_FineTuned.dpl>
   <OpenDisplay=0>
   <Script=Coupler_EMerge.m>
   <RunScript=0>
@@ -37,7 +37,7 @@
   <Port P2 1 480 180 4 -46 0 2 "2" 1 "analog" 0>
   <Port P3 1 250 390 -23 10 0 0 "3" 1 "analog" 0>
   <Port P4 1 520 390 4 -46 0 2 "4" 1 "analog" 0>
-  <SPfile X1 1 370 280 -260 -26 1 3 "Coupler_15dB_EMerge.s4p" 1 "rectangular" 0 "linear" 0 "open" 0 "4" 0>
+  <SPfile X1 1 370 280 -260 -26 1 3 "Coupler_15dB_EMerge_FineTuned.s4p" 1 "rectangular" 0 "linear" 0 "open" 0 "4" 0>
 </Components>
 <Wires>
   <400 310 400 390 "" 0 0 0 "">
