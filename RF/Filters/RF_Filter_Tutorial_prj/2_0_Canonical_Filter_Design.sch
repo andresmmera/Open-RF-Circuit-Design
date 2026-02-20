@@ -1,6 +1,6 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=-381,-28,960,727,1.17289,0,0>
+  <View=-296,2,770,583,1.4716,0,0>
   <Grid=10,10,1>
   <DataSet=2_0_Canonical_Filter_Design.dat>
   <DataDisplay=2_0_Canonical_Filter_Design.dpl>
@@ -34,7 +34,7 @@
   <Text 50 50 15 #000000 0 "Canonical Filters">
   <Text 30 100 8 #000000 0 "Canonical filters are obtained from the lowpass (LP) prototype.">
   <Text 30 160 8 #000000 0 "Through scaling, the prototype response can be adjusted to any Z_0 and f_c">
-  <Text 30 530 7 #000000 0 "[1] "Handbook of Filter Synthesis", Anatol I. Zverev. John Wiley and Sons Inc. 1967">
+  <Text 40 510 7 #000000 0 "[1] "Handbook of Filter Synthesis", Anatol I. Zverev. John Wiley and Sons Inc. 1967">
   <Text 30 180 8 #000000 0 "Highpass, bandpass and bandstop can be obtained from circuit transformations">
   <Text 30 120 8 #000000 0 "The LP prototype coefficients [1] are normalized for Z_0 = 1 Ω and ω_c = 1 rad/s">
   <Text 30 140 8 #000000 0 "[1] contains extensive tables with lowpass coefficients for different responses">

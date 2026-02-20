@@ -1,6 +1,6 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=0,-120,1019,453,1,0,0>
+  <View=-1,-56,650,298,2.41231,0,0>
   <Grid=10,10,1>
   <DataSet=z_References.dat>
   <DataDisplay=z_References.dpl>
@@ -29,6 +29,6 @@
 <Paintings>
   <Text 40 70 9 #000000 0 "[1] S. B. Cohn, "Direct-Coupled-Resonator Filters," in Proceedings of the IRE, vol. 45, \nno. 2, pp. 187-196, Feb. 1957, doi: 10.1109/JRPROC.1957.278389.\n\n">
   <Text 40 120 9 #000000 0 "[2] "Microwave Filters, Impedance-Matching Networks, and Coupling Structures", \nGeorge L. Matthaei, L. Young, E. M. Jones.">
-  <Text 40 170 9 #000000 0 "[3] "Handbook of Filter Synthesis", \nAnatol I. Zverev. John Wiley and Sons Inc. 1967">
+  <Text 40 170 9 #000000 0 "[3] "Handbook of Filter Synthesis", Anatol I. Zverev. John Wiley and Sons Inc. 1967">
   <Text 40 40 12 #000000 0 "References">
 </Paintings>

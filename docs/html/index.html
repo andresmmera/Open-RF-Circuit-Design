@@ -96,7 +96,7 @@
 <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
 <div class="w-full min-w-0 mx-auto">
 <div id="content" role="main">
-<section id="circuit-design-examples">
+<section class="tex2jax_ignore mathjax_ignore" id="circuit-design-examples">
 <h1>Circuit Design Examples</h1>
 <section id="introduction">
 <h2>Introduction</h2>
@@ -135,6 +135,25 @@
 </section>
 <section id="rf-projects">
 <h2>RF Projects</h2>
+<section id="filters">
+<h3>Filters</h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Project</p></th>
+<th class="head"><p>Frequency</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="RF/Filters/RF_Filter_Tutorial_prj/index.html"><span class="doc std std-doc">RF.F.01</span></a></p></td>
+<td><p><a class="reference internal" href="RF/Filters/RF_Filter_Tutorial_prj/index.html"><span class="doc std std-doc">RF Filter Tutorial</span></a></p></td>
+<td><p>500 MHz</p></td>
+<td><p>Lumped LC. Canonical &amp; Direct-Coupled</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="couplers">
 <h3>Couplers</h3>
 <table class="docutils align-default">
@@ -146,12 +165,12 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>01</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="RF/Couplers/MS_Coupler_2000MHz_prj/index.html"><span class="doc std std-doc">RF.C.01</span></a></p></td>
 <td><p><a class="reference internal" href="RF/Couplers/MS_Coupler_2000MHz_prj/index.html"><span class="doc std std-doc">Directional Coupler</span></a></p></td>
 <td><p>2000 MHz</p></td>
 <td><p>Microstrip. RO4003C</p></td>
 </tr>
-<tr class="row-odd"><td><p>02</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="RF/Couplers/MS_BranchLine_2000MHz_prj/index.html"><span class="doc std std-doc">RF.C.02</span></a></p></td>
 <td><p><a class="reference internal" href="RF/Couplers/MS_BranchLine_2000MHz_prj/index.html"><span class="doc std std-doc">Branch-Line</span></a></p></td>
 <td><p>2000 MHz</p></td>
 <td><p>Microstrip. RO4003C</p></td>
@@ -170,6 +189,7 @@
 </ul>
 </li>
 <li><a :data-current="activeSection === '#rf-projects'" class="reference internal" href="#rf-projects">RF Projects</a><ul>
+<li><a :data-current="activeSection === '#filters'" class="reference internal" href="#filters">Filters</a></li>
 <li><a :data-current="activeSection === '#couplers'" class="reference internal" href="#couplers">Couplers</a></li>
 </ul>
 </li>

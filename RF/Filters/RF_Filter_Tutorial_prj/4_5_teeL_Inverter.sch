@@ -1,6 +1,6 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=-421,-279,1428,761,0.806663,141,198>
+  <View=-465,-279,1488,935,0.971408,138,206>
   <Grid=10,10,1>
   <DataSet=4_5_teeL_Inverter.dat>
   <DataDisplay=4_5_teeL_Inverter.dpl>
@@ -8,9 +8,9 @@
   <Script=teeL_Inverter.m>
   <RunScript=0>
   <showFrame=1>
-  <FrameText0=Title>
-  <FrameText1=Drawn By:>
-  <FrameText2=Date:>
+  <FrameText0=Inductive Tee-type Inverter>
+  <FrameText1=Drawn By: Andrés Martínez Mera>
+  <FrameText2=Date: Feb 21, 2026>
   <FrameText3=Revision:>
 </Properties>
 <Symbol>
@@ -20,7 +20,6 @@
   <Rectangle -30 -20 200 40 #000000 1 1 #c0c0c0 1 0>
 </Symbol>
 <Components>
-  <Port P1 1 950 50 -23 12 0 0 "1" 1 "analog" 0>
   <.SP SP1 1 60 580 0 56 0 0 "lin" 1 "100 MHz" 1 "800 MHz" 1 "71" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0>
   <Eqn InverterParameters1 1 80 130 -31 18 0 0 "f0=500e6" 1 "w=2*pi*f0" 1 "RS=50" 1 "RL=100" 1 "yes" 0>
   <Eqn Eqn1 1 250 600 -31 18 0 0 "S11_dB=dB(S[1,1])" 1 "yes" 0>
@@ -33,6 +32,7 @@
   <L L1 1 200 360 -26 10 0 0 "Ltee_0" 1 "" 0>
   <L L2 1 340 360 -26 10 0 0 "Ltee_0" 1 "" 0>
   <L L3 1 270 420 -14 60 0 1 "Ltee" 1 "" 0>
+  <Port P1 5 950 50 -23 12 0 0 "1" 0 "analog" 0>
 </Components>
 <Wires>
   <110 360 110 380 "" 0 0 0 "">
@@ -44,14 +44,14 @@
   <230 360 270 360 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 550 514 278 184 3 #c0c0c0 1 00 0 1e+08 1e+08 8e+08 0 -50 5 5 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
+  <Rect 550 597 385 227 3 #c0c0c0 1 00 0 1e+08 1e+08 8e+08 0 -50 5 5 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"S11_dB" #0000ff 0 3 0 0 0>
   </Rect>
-  <Smith 580 270 200 200 3 #c0c0c0 1 00 1 0 1 1 1 0 4 1 1 0 1 1 315 0 225 1 0 0 "" "" "">
+  <Smith 580 324 254 254 3 #c0c0c0 1 00 1 0 1 1 1 0 4 1 1 0 1 1 315 0 225 1 0 0 "" "" "">
 	<"S[1,1]" #0000ff 1 3 0 0 0>
-	  <Mkr 5e+08 60 -239 3 0 0>
+	  <Mkr 5e+08 210 -223 3 0 0>
   </Smith>
-  <Tab 230 278 195 58 3 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 1 0 0 "" "" "">
+  <Tab 230 305 272 85 3 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 1 0 0 "" "" "">
 	<"Ltee" #0000ff 0 3 1 0 0>
 	<"Ltee_0" #0000ff 0 3 1 0 0>
   </Tab>

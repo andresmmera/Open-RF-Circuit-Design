@@ -1,6 +1,6 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=-618,-40,1295,822,1.45698,487,0>
+  <View=-292,1,761,576,1.48955,0,0>
   <Grid=10,10,1>
   <DataSet=3_0_Direct_Coupled_Filters.dat>
   <DataDisplay=3_0_Direct_Coupled_Filters.dpl>
