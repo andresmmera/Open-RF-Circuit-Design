@@ -4,7 +4,7 @@
 
 This is a tutorial on how to build lumped RF filter from scratch.
 
-The project is available [here](https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/RF_Filter_Tutorial_prj)
+The project files are available [here](https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/RF_Filter_Tutorial_prj)
 
 
 ### Canonical filters

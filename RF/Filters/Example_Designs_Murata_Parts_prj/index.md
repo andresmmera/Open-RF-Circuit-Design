@@ -4,7 +4,7 @@
 
 This project shows how to simulate RF filters using pspice models for Murata components.
 
-The project is available [here](https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/Example_Designs_Murata_Parts_prj)
+The project files are available [here](https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/Example_Designs_Murata_Parts_prj)
 
 A small library with G0201 capacitors and G0603 inductors is included in the project directory.
 
