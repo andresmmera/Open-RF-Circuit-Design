@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html :class="{ 'dark' : darkMode === true }" data-content_root="../../../" lang="en" x-data="{ darkMode: $persist(window.matchMedia('(prefers-color-scheme: dark)').matches), activeSection: ''}">
+<html :class="{ 'dark' : darkMode === true }" data-content_root="../../" lang="en" x-data="{ darkMode: $persist(window.matchMedia('(prefers-color-scheme: dark)').matches), activeSection: ''}">
 <head>
 <script>
     (function () {
@@ -21,21 +21,21 @@
 <meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="#030711" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>RF Filters with Murata parts | Circuit Design Examples</title>
-<meta content="RF Filters with Murata parts | Circuit Design Examples" property="og:title"/>
-<meta content="RF Filters with Murata parts | Circuit Design Examples" name="twitter:title"/>
-<link href="../../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
-<link href="../../../_static/theme.css?v=73505e79" rel="stylesheet" type="text/css"/>
-<link href="https://andresmmera.github.io/Open-RF-Circuit-Design/RF/Filters/Example_Designs_Murata_Parts_prj/index.html" rel="canonical"/>
-<link href="../../../search.html" rel="search" title="Search"/>
-<link href="../../../genindex.html" rel="index" title="Index"/>
+<title>How to get an analog voltage from a PWM output? | Circuit Design Examples</title>
+<meta content="How to get an analog voltage from a PWM output? | Circuit Design Examples" property="og:title"/>
+<meta content="How to get an analog voltage from a PWM output? | Circuit Design Examples" name="twitter:title"/>
+<link href="../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
+<link href="../../_static/theme.css?v=73505e79" rel="stylesheet" type="text/css"/>
+<link href="https://andresmmera.github.io/Open-RF-Circuit-Design/General_Electronics/PWM_as_DAC_prj/index.html" rel="canonical"/>
+<link href="../../search.html" rel="search" title="Search"/>
+<link href="../../genindex.html" rel="index" title="Index"/>
 </head>
 <body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
 <div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
       Skip to content
     </a><header class="sticky top-0 z-40 w-full border-b shadow-xs border-border bg-background/90 backdrop-blur"><div class="container flex items-center h-14">
 <div class="hidden mr-4 md:flex">
-<a class="flex items-center mr-6" href="../../../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">Circuit Design Examples</span>
+<a class="flex items-center mr-6" href="../../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">Circuit Design Examples</span>
 </a><nav class="flex items-center gap-6 text-sm font-medium">
 <a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://andresmmera.github.io/qucs-s-spar-viewer/" rel="noopener nofollow">Qucs-S SP Viewer</a>
 <a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://qucs-s-help.readthedocs.io" rel="noopener nofollow">Qucs-S Docs</a>
@@ -48,7 +48,7 @@
 <span class="sr-only">Toggle navigation menu</span>
 </button>
 <div class="flex items-center justify-between flex-1 gap-2 sm:gap-4 md:justify-end">
-<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../../../search.html" class="relative flex items-center group" id="searchbox" method="get">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../../search.html" class="relative flex items-center group" id="searchbox" method="get">
 <input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
 <kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
 <span class="text-xs">⌘</span>
@@ -75,7 +75,7 @@
 </div>
 </header>
 <div class="flex-1"><div class="container md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
-<a class="justify-start text-sm md:!hidden bg-background" href="../../../index.html"><span class="font-bold text-clip whitespace-nowrap">Circuit Design Examples</span>
+<a class="justify-start text-sm md:!hidden bg-background" href="../../index.html"><span class="font-bold text-clip whitespace-nowrap">Circuit Design Examples</span>
 </a>
 <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0">
 <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
@@ -96,99 +96,42 @@
 <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
 <div class="w-full min-w-0 mx-auto">
 <nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
-<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../../../index.html">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../../index.html">
 <span class="hidden md:inline">Circuit Design Examples</span>
 <svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">RF Filters with Murata parts</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">How to get an analog voltage from a PWM output?</span>
 </nav>
 <div id="content" role="main">
-<section class="tex2jax_ignore mathjax_ignore" id="rf-filters-with-murata-parts">
-<h1>RF Filters with Murata parts</h1>
+<section class="tex2jax_ignore mathjax_ignore" id="how-to-get-an-analog-voltage-from-a-pwm-output">
+<h1>How to get an analog voltage from a PWM output?</h1>
 <section id="introduction">
 <h2>Introduction</h2>
-<p>This project shows how to simulate RF filters using pspice models for Murata components.</p>
-<p>The project files are available <a class="reference external" href="https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/Example_Designs_Murata_Parts_prj" rel="nofollow noopener">here<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
-<p>A small library with G0201 capacitors and G0603 inductors is included in the project directory.</p>
-<section id="highpass-example">
-<h3>Highpass Example</h3>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Cutoff frequency</p></td>
-<td><p>500 MHz</p></td>
-</tr>
-<tr class="row-odd"><td><p>Response</p></td>
-<td><p>Chebyshev o5, ripple = 0.01 dB</p></td>
-</tr>
-<tr class="row-even"><td><p>System impedance</p></td>
-<td><p>50 <span class="math notranslate nohighlight">\(\Omega\)</span></p></td>
-</tr>
-</tbody>
-</table>
+<p>In many situations a designer may need to obtain an analog voltage from a microcontroller. This is typically done with built-in DACs, but sometimes (and this is quite common with cheap microcontrollers) the number of DACs is not enough or even zero. If the microcontroller has a spare PWM output, it is possible to obtain an analog voltage.</p>
+<p>Obviouly, this won’t be as fast as a DAC, but it works for slow analog control voltages.</p>
+<p>Typically, the output voltage of a PWM port is 0 V for the “low” state and 3.3 V for the “high” state. In order to get an arbitrary voltage between <span class="math notranslate nohighlight">\(V_{low}\)</span> and <span class="math notranslate nohighlight">\(V_{high}\)</span> is to vary the PWM duty cycle and apply some filtering (RC)</p>
+<p>The project files are available <a class="reference external" href="https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/General%20Electronics/PWM_as_DAC_prj" rel="nofollow noopener">here<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As a rule of thumb:</p>
+<div class="math notranslate nohighlight">
+\[ V_{out} = DC · V_{high}\]</div>
+</div>
 <figure class="align-default" id="id1">
-<img alt="../../../_images/1_1_HPF.png" class="with-border" src="../../../_images/1_1_HPF.png"/>
+<img alt="../../_images/PWM_as_DAC.png" class="with-border" src="../../_images/PWM_as_DAC.png"/>
 <figcaption>
-<p><span class="caption-text">Lumped HPF with Murata parts (pspice models)</span></p>
+<p><span class="caption-text">Transient simulation of a PWM-to-analog converter</span></p>
 </figcaption>
 </figure>
-</section>
-<section id="direct-coupled-bpf">
-<h3>Direct Coupled BPF</h3>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Center frequency</p></td>
-<td><p>500 MHz</p></td>
-</tr>
-<tr class="row-odd"><td><p>Bandwidth</p></td>
-<td><p>100 MHz</p></td>
-</tr>
-<tr class="row-even"><td><p>Response</p></td>
-<td><p>Chebyshev o3, ripple = 0.01 dB</p></td>
-</tr>
-<tr class="row-odd"><td><p>System impedance</p></td>
-<td><p>50 <span class="math notranslate nohighlight">\(\Omega\)</span></p></td>
-</tr>
-</tbody>
-</table>
-<figure class="align-default" id="id2">
-<img alt="../../../_images/2_1_BPF.png" class="with-border" src="../../../_images/2_1_BPF.png"/>
-<figcaption>
-<p><span class="caption-text">Lumped BPF with Murata parts (pspice models)</span></p>
-</figcaption>
-</figure>
-</section>
-<section id="references">
-<h3>References</h3>
-<ol class="arabic simple">
-<li><p>S. B. Cohn, “Direct-Coupled-Resonator Filters,” in Proceedings of the IRE, vol. 45, no. 2, pp. 187-196, Feb. 1957, doi: 10.1109/JRPROC.1957.278389.</p></li>
-<li><p>George L. Matthaei, L. Young, E. M. Jones. “Microwave Filters, Impedance-Matching Networks, and Coupling Structures”.</p></li>
-<li><p>Anatol I. Zverev, “Handbook of Filter Synthesis”. John Wiley and Sons Inc. 1967</p></li>
-</ol>
-</section>
 </section>
 </section>
 </div><div class="flex justify-between items-center pt-6 mt-12 border-t border-border gap-4">
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#introduction'" class="reference internal" href="#introduction">Introduction</a><ul>
-<li><a :data-current="activeSection === '#highpass-example'" class="reference internal" href="#highpass-example">Highpass Example</a></li>
-<li><a :data-current="activeSection === '#direct-coupled-bpf'" class="reference internal" href="#direct-coupled-bpf">Direct Coupled BPF</a></li>
-<li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
+<li><a :data-current="activeSection === '#introduction'" class="reference internal" href="#introduction">Introduction</a></li>
 </ul>
 </div>
 </aside>
@@ -202,10 +145,10 @@
 </div>
 </footer>
 </div>
-<script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
-<script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
-<script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-<script defer="defer" src="../../../_static/theme.js?v=582b20c5"></script>
+<script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+<script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+<script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+<script defer="defer" src="../../_static/theme.js?v=582b20c5"></script>
 <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
 <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 </body>

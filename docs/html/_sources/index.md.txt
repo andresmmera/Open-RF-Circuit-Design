@@ -35,3 +35,9 @@ The examples in this repo use the following tools
 |--- |---------------------|-------------|---------------------|
 | [RF.C.01](/RF/Couplers/MS_Coupler_2000MHz_prj/index) | [Directional Coupler](/RF/Couplers/MS_Coupler_2000MHz_prj/index)| 2000 MHz    | Microstrip. RO4003C |
 | [RF.C.02](/RF/Couplers/MS_BranchLine_2000MHz_prj/index) | [Branch-Line](/RF/Couplers/MS_BranchLine_2000MHz_prj/index)| 2000 MHz    | Microstrip. RO4003C |
+
+## General Electronics
+
+| #  |      Project        |  Notes    |
+|--- |---------------------|-------------|
+|[GE.01](/General_Electronics/PWM_as_DAC_prj/index) |[How to use a PWM output to get an analog voltage](/General_Electronics/PWM_as_DAC_prj/index)|Get an analog voltage from a microcontroller PWM output|
