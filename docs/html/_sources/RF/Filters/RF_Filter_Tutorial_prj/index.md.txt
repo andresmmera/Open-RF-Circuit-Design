@@ -13,7 +13,7 @@ This is the most common technique to design an RF filter. The design begins by c
 
 [Learn more here](/RF/Filters/RF_Filter_Tutorial_prj/CanonicalFilters)
     
-### Direct Coupler Filters
+### Direct Coupled Filters
     
 The Direct-Coupled filter topology consist on a number of resonators (shunt or series) coupled with inverters tuned to satisfy a given response.
 

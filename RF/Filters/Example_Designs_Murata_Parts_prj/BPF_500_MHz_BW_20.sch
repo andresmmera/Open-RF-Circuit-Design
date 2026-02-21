@@ -1,6 +1,6 @@
-<Qucs Schematic 24.3.0>
+<Qucs Schematic 25.2.0>
 <Properties>
-  <View=-710,-171,2576,1441,0.838807,461,247>
+  <View=-461,-375,1885,1100,0.668491,0,131>
   <Grid=10,10,1>
   <DataSet=BPF_500_MHz_BW_20.dat>
   <DataDisplay=BPF_500_MHz_BW_20.dpl>
@@ -8,7 +8,7 @@
   <Script=HPF_500_MHz.m>
   <RunScript=0>
   <showFrame=3>
-  <FrameText0=Lumped HPF 500 MHz>
+  <FrameText0=Lumped BPF 500 MHz>
   <FrameText1=Drawn By: Andrés Martínez Mera>
   <FrameText2=Date: Aug 2024>
   <FrameText3=Revision:>
@@ -38,8 +38,8 @@
   <GND * 1 510 490 0 0 0 0>
   <Lib C14 1 510 440 13 0 0 1 "/home/andresmmera/.qucs/Example_Designs_Murata_Parts_prj/GRM03" 0 "0.5 pF" 0>
   <Lib C11 1 560 370 -10 13 0 0 "/home/andresmmera/.qucs/Example_Designs_Murata_Parts_prj/GRM03" 0 "2.2 pF" 0>
-  <Eqn Eqn1 1 680 630 -28 15 0 0 "dBS21=dB(S[2,1])" 1 "dBS11=dB(S[1,1])" 1 "yes" 0>
-  <.SP SP1 1 460 620 0 60 0 0 "lin" 1 "300MHz" 1 "700MHz" 1 "201" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0>
+  <Eqn Eqn1 1 360 630 -28 15 0 0 "dBS21=dB(S[2,1])" 1 "dBS11=dB(S[1,1])" 1 "yes" 0>
+  <.SP SP1 1 140 620 0 56 0 0 "lin" 1 "300MHz" 1 "700MHz" 1 "201" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0>
 </Components>
 <Wires>
   <280 400 280 430 "" 0 0 0 "">
@@ -71,7 +71,7 @@
   <440 370 440 400 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 950 499 482 319 3 #c0c0c0 1 00 1 1e+08 2e+08 2e+09 0 -50 5 0 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
+  <Rect 970 589 482 319 3 #c0c0c0 1 00 1 1e+08 2e+08 2e+09 0 -50 5 0 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"dBS21" #ff0000 0 3 0 0 0>
 	  <Mkr 4.5e+08 -12 -409 3 0 0>
 	  <Mkr 5.5e+08 311 -409 3 0 0>
@@ -79,4 +79,6 @@
   </Rect>
 </Diagrams>
 <Paintings>
+  <Text 80 70 15 #000000 0 "Direct-Coupled Bandpass Filter with Murata Parts">
+  <Text 100 190 12 #000000 0 "A direct-coupled bandpass filter is simulated using the components' pspice model\nprovided by Murata">
 </Paintings>

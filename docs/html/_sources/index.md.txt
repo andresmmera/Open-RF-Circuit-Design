@@ -27,6 +27,7 @@ The examples in this repo use the following tools
 | #  |      Project        | Frequency   | Notes    |
 |--- |---------------------|-------------|---------------------|
 | [RF.F.01](/RF/Filters/RF_Filter_Tutorial_prj/index) | [RF Filter Tutorial](/RF/Filters/RF_Filter_Tutorial_prj/index)| 500 MHz    | Lumped LC. Canonical & Direct-Coupled |
+|[RF.F.02](/RF/Filters/Example_Designs_Murata_Parts_prj/index) |[RF Filters with Murata parts](/RF/Filters/Example_Designs_Murata_Parts_prj/index)|500 MHz|Simulations with Murata pspice models|
 
 ### Couplers
 

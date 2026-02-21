@@ -21,12 +21,12 @@
 <meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="#030711" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>RF Filter Design Tutorial | Circuit Design Examples</title>
-<meta content="RF Filter Design Tutorial | Circuit Design Examples" property="og:title"/>
-<meta content="RF Filter Design Tutorial | Circuit Design Examples" name="twitter:title"/>
+<title>RF Filters with Murata parts | Circuit Design Examples</title>
+<meta content="RF Filters with Murata parts | Circuit Design Examples" property="og:title"/>
+<meta content="RF Filters with Murata parts | Circuit Design Examples" name="twitter:title"/>
 <link href="../../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/theme.css?v=73505e79" rel="stylesheet" type="text/css"/>
-<link href="https://andresmmera.github.io/Open-RF-Circuit-Design/RF/Filters/RF_Filter_Tutorial_prj/index.html" rel="canonical"/>
+<link href="https://andresmmera.github.io/Open-RF-Circuit-Design/RF/Filters/Example_Designs_Murata_Parts_prj/index.html" rel="canonical"/>
 <link href="../../../search.html" rel="search" title="Search"/>
 <link href="../../../genindex.html" rel="index" title="Index"/>
 </head>
@@ -102,29 +102,72 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">RF Filter Design Tutorial</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">RF Filters with Murata parts</span>
 </nav>
 <div id="content" role="main">
-<section class="tex2jax_ignore mathjax_ignore" id="rf-filter-design-tutorial">
-<h1>RF Filter Design Tutorial</h1>
+<section class="tex2jax_ignore mathjax_ignore" id="rf-filters-with-murata-parts">
+<h1>RF Filters with Murata parts</h1>
 <section id="introduction">
 <h2>Introduction</h2>
-<p>This is a tutorial on how to build lumped RF filter from scratch.</p>
-<p>The project is available <a class="reference external" href="https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/RF_Filter_Tutorial_prj" rel="nofollow noopener">here<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
-<section id="canonical-filters">
-<h3>Canonical filters</h3>
-<p>This is the most common technique to design an RF filter. The design begins by choosing a response prototype and finding its coefficients. Then, through transformation it is possible to design highpass, bandpass and bandstop filters of any system impedance.</p>
-<p><a class="reference internal" href="CanonicalFilters.html"><span class="doc std std-doc">Learn more here</span></a></p>
+<p>This project shows how to simulate RF filters using pspice models for Murata components.</p>
+<p>The project is available <a class="reference external" href="https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/Example_Designs_Murata_Parts_prj" rel="nofollow noopener">here<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
+<p>A small library with G0201 capacitors and G0603 inductors is included in the project directory.</p>
+<section id="highpass-example">
+<h3>Highpass Example</h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Cutoff frequency</p></td>
+<td><p>500 MHz</p></td>
+</tr>
+<tr class="row-odd"><td><p>Response</p></td>
+<td><p>Chebyshev o5, ripple = 0.01 dB</p></td>
+</tr>
+<tr class="row-even"><td><p>System impedance</p></td>
+<td><p>50 <span class="math notranslate nohighlight">\(\Omega\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<figure class="align-default" id="id1">
+<img alt="../../../_images/1_1_HPF.png" class="with-border" src="../../../_images/1_1_HPF.png"/>
+<figcaption>
+<p><span class="caption-text">Lumped HPF with Murata parts (pspice models)</span></p>
+</figcaption>
+</figure>
 </section>
-<section id="direct-coupled-filters">
-<h3>Direct Coupled Filters</h3>
-<p>The Direct-Coupled filter topology consist on a number of resonators (shunt or series) coupled with inverters tuned to satisfy a given response.</p>
-<p>This topology is very popular in the design of narrowband RF filters, since the designer can fix one of the parameters of the resonators (e.g. L) and then adjust the other (e.g. C) to get the approapiate inverter. In many cases, the implementation of narrowband canonical BPF is not practical because of the values it yields and the direct-coupled implemetation is the choice.</p>
-<p>There are two approaches to implement direct-coupled bandpass filters:</p>
-<ul class="simple">
-<li><p>Shunt resonators <a class="reference internal" href="ShuntResonators.html"><span class="doc std std-doc">Learn more</span></a></p></li>
-<li><p>Series resonators <a class="reference internal" href="SeriesResonators.html"><span class="doc std std-doc">Learn more</span></a></p></li>
-</ul>
+<section id="direct-coupled-bpf">
+<h3>Direct Coupled BPF</h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Center frequency</p></td>
+<td><p>500 MHz</p></td>
+</tr>
+<tr class="row-odd"><td><p>Bandwidth</p></td>
+<td><p>100 MHz</p></td>
+</tr>
+<tr class="row-even"><td><p>Response</p></td>
+<td><p>Chebyshev o3, ripple = 0.01 dB</p></td>
+</tr>
+<tr class="row-odd"><td><p>System impedance</p></td>
+<td><p>50 <span class="math notranslate nohighlight">\(\Omega\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<figure class="align-default" id="id2">
+<img alt="../../../_images/2_1_BPF.png" class="with-border" src="../../../_images/2_1_BPF.png"/>
+<figcaption>
+<p><span class="caption-text">Lumped BPF with Murata parts (pspice models)</span></p>
+</figcaption>
+</figure>
 </section>
 <section id="references">
 <h3>References</h3>
@@ -141,8 +184,8 @@
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#introduction'" class="reference internal" href="#introduction">Introduction</a><ul>
-<li><a :data-current="activeSection === '#canonical-filters'" class="reference internal" href="#canonical-filters">Canonical filters</a></li>
-<li><a :data-current="activeSection === '#direct-coupled-filters'" class="reference internal" href="#direct-coupled-filters">Direct Coupled Filters</a></li>
+<li><a :data-current="activeSection === '#highpass-example'" class="reference internal" href="#highpass-example">Highpass Example</a></li>
+<li><a :data-current="activeSection === '#direct-coupled-bpf'" class="reference internal" href="#direct-coupled-bpf">Direct Coupled BPF</a></li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
@@ -163,5 +206,7 @@
 <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script defer="defer" src="../../../_static/theme.js?v=582b20c5"></script>
+<script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 </body>
 </html>
