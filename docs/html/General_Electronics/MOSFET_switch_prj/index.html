@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html :class="{ 'dark' : darkMode === true }" data-content_root="./" lang="en" x-data="{ darkMode: $persist(window.matchMedia('(prefers-color-scheme: dark)').matches), activeSection: ''}">
+<html :class="{ 'dark' : darkMode === true }" data-content_root="../../" lang="en" x-data="{ darkMode: $persist(window.matchMedia('(prefers-color-scheme: dark)').matches), activeSection: ''}">
 <head>
 <script>
     (function () {
@@ -21,21 +21,21 @@
 <meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="#030711" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Circuit Design Examples</title>
-<meta content="Circuit Design Examples" property="og:title"/>
-<meta content="Circuit Design Examples" name="twitter:title"/>
-<link href="_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
-<link href="_static/theme.css?v=73505e79" rel="stylesheet" type="text/css"/>
-<link href="https://andresmmera.github.io/Open-RF-Circuit-Design/index.html" rel="canonical"/>
-<link href="search.html" rel="search" title="Search"/>
-<link href="genindex.html" rel="index" title="Index"/>
+<title>How to use a MOSFET as a Switch | Circuit Design Examples</title>
+<meta content="How to use a MOSFET as a Switch | Circuit Design Examples" property="og:title"/>
+<meta content="How to use a MOSFET as a Switch | Circuit Design Examples" name="twitter:title"/>
+<link href="../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
+<link href="../../_static/theme.css?v=73505e79" rel="stylesheet" type="text/css"/>
+<link href="https://andresmmera.github.io/Open-RF-Circuit-Design/General_Electronics/MOSFET_switch_prj/index.html" rel="canonical"/>
+<link href="../../search.html" rel="search" title="Search"/>
+<link href="../../genindex.html" rel="index" title="Index"/>
 </head>
 <body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
 <div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
       Skip to content
     </a><header class="sticky top-0 z-40 w-full border-b shadow-xs border-border bg-background/90 backdrop-blur"><div class="container flex items-center h-14">
 <div class="hidden mr-4 md:flex">
-<a class="flex items-center mr-6" href="#"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">Circuit Design Examples</span>
+<a class="flex items-center mr-6" href="../../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">Circuit Design Examples</span>
 </a><nav class="flex items-center gap-6 text-sm font-medium">
 <a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://andresmmera.github.io/qucs-s-spar-viewer/" rel="noopener nofollow">Qucs-S SP Viewer</a>
 <a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://qucs-s-help.readthedocs.io" rel="noopener nofollow">Qucs-S Docs</a>
@@ -48,7 +48,7 @@
 <span class="sr-only">Toggle navigation menu</span>
 </button>
 <div class="flex items-center justify-between flex-1 gap-2 sm:gap-4 md:justify-end">
-<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="search.html" class="relative flex items-center group" id="searchbox" method="get">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../../search.html" class="relative flex items-center group" id="searchbox" method="get">
 <input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
 <kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
 <span class="text-xs">⌘</span>
@@ -75,7 +75,7 @@
 </div>
 </header>
 <div class="flex-1"><div class="container md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
-<a class="justify-start text-sm md:!hidden bg-background" href="#"><span class="font-bold text-clip whitespace-nowrap">Circuit Design Examples</span>
+<a class="justify-start text-sm md:!hidden bg-background" href="../../index.html"><span class="font-bold text-clip whitespace-nowrap">Circuit Design Examples</span>
 </a>
 <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0">
 <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
@@ -95,131 +95,140 @@
 </aside>
 <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
 <div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../../index.html">
+<span class="hidden md:inline">Circuit Design Examples</span>
+<svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
+</svg>
+</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">How to use a MOSFET as a Switch</span>
+</nav>
 <div id="content" role="main">
-<section class="tex2jax_ignore mathjax_ignore" id="circuit-design-examples">
-<h1>Circuit Design Examples</h1>
+<section class="tex2jax_ignore mathjax_ignore" id="how-to-use-a-mosfet-as-a-switch">
+<h1>How to use a MOSFET as a Switch</h1>
 <section id="introduction">
 <h2>Introduction</h2>
-<p>This repository showcases self-learning projects in electronics and RF engineering. Contributions or suggestions are welcome. Feel free to reach me out at <a class="reference external" href="mailto:andresmmera%40protonmail.com" rel="nofollow noopener">andresmmera<span>@</span>protonmail<span>.</span>com<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
-<p>While my primary interest is RF engineering, this repo also includes general electronics designs for experimentation and learning. Bug reports or improvement ideas are appreciated.</p>
-<section id="open-source-rf-engineering-software">
-<h3>Open-Source RF Engineering Software</h3>
-<p>The examples in this repo use the following tools</p>
+<p>MOSFETs are typically used as switches to turn on or off a circuit based on a digital input. Their main advantage over BJTs is that they require little current to operate (the input impedance is very high). This makes them particularly suitable to be driven from the GPO of a microcontroller. They also have a very low channel resistance, which makes them suitable for handling high current loads.</p>
+<p>The project files are available <a class="reference external" href="https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/General_Electronics/MOSFET_switch_prj" rel="nofollow noopener">here<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
+</section>
+<section id="comparison-over-bjts">
+<h2>Comparison over BJTs</h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Tool</p></th>
-<th class="head"><p>Licensing</p></th>
-<th class="head"><p>Notes</p></th>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>BJT</p></th>
+<th class="head"><p>MOSFET</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="https://ra3xdh.github.io/" rel="nofollow noopener">Qucs-S<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p></td>
-<td><p>GPL v2</p></td>
-<td><p><a class="reference external" href="https://github.com/ra3xdh/qucs_s" rel="nofollow noopener">GitHub Repo<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p></td>
+<tr class="row-even"><td><p>Drive</p></td>
+<td><p>Current driven</p></td>
+<td><p>Voltage driven</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://andresmmera.github.io/qucs-s-spar-viewer/" rel="nofollow noopener">Qucs-S S-Parameter Viewer<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p></td>
-<td><p>GPL v3</p></td>
-<td><p><a class="reference external" href="https://github.com/andresmmera/qucs-s-spar-viewer" rel="nofollow noopener">GitHub Repo<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p></td>
+<tr class="row-odd"><td><p>Drive power</p></td>
+<td><p>Higher</p></td>
+<td><p>Low</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.emerge-software.com" rel="nofollow noopener">EMerge<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p></td>
-<td><p>GPL v2</p></td>
-<td><p><a class="reference external" href="https://github.com/FennisRobert/EMerge" rel="nofollow noopener">GitHub Repo<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p></td>
+<tr class="row-even"><td><p>Swithching time</p></td>
+<td><p>Low</p></td>
+<td><p>Low</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.sonnetsoftware.com/products/lite/" rel="nofollow noopener">Sonnet Lite<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p></td>
-<td><p>GPL v2</p></td>
-<td><p>Proprietary software. Free license</p></td>
+<tr class="row-odd"><td><p>Temperature stability</p></td>
+<td><p>Poorer, depends on <span class="math notranslate nohighlight">\(h_{fe}\)</span></p></td>
+<td><p>High</p></td>
 </tr>
 </tbody>
 </table>
 </section>
+<section id="low-side-and-high-side-switches">
+<h2>Low-Side and High-Side Switches</h2>
+<figure class="align-default" id="id1">
+<img alt="../../_images/High-side_vs_Low-side_switch.png" class="with-border" src="../../_images/High-side_vs_Low-side_switch.png"/>
+<figcaption>
+<p><span class="caption-text">High-side and low-side switch configuration</span></p>
+</figcaption>
+</figure>
 </section>
-<section id="rf-projects">
-<h2>RF Projects</h2>
-<section id="filters">
-<h3>Filters</h3>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>#</p></th>
-<th class="head"><p>Project</p></th>
-<th class="head"><p>Frequency</p></th>
-<th class="head"><p>Notes</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="RF/Filters/RF_Filter_Tutorial_prj/index.html"><span class="doc std std-doc">RF.F.01</span></a></p></td>
-<td><p><a class="reference internal" href="RF/Filters/RF_Filter_Tutorial_prj/index.html"><span class="doc std std-doc">RF Filter Tutorial</span></a></p></td>
-<td><p>500 MHz</p></td>
-<td><p>Lumped LC. Canonical &amp; Direct-Coupled</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="RF/Filters/Example_Designs_Murata_Parts_prj/index.html"><span class="doc std std-doc">RF.F.02</span></a></p></td>
-<td><p><a class="reference internal" href="RF/Filters/Example_Designs_Murata_Parts_prj/index.html"><span class="doc std std-doc">RF Filters with Murata parts</span></a></p></td>
-<td><p>500 MHz</p></td>
-<td><p>Simulations with Murata pspice models</p></td>
-</tr>
-</tbody>
-</table>
+<section id="pmosfet-devices">
+<h2>PMOSFET Devices</h2>
+<p>The PMOSFET devices work as follows:</p>
+<p><strong>ON mode</strong></p>
+<div class="math notranslate nohighlight">
+\[ V_{GS} &lt; V_{th}\]</div>
+<p><strong>OFF mode</strong></p>
+<div class="math notranslate nohighlight">
+\[ V_{GS} &gt; V_{th}\]</div>
+<p>Typically, <span class="math notranslate nohighlight">\(V_{th} ~ -3 V\)</span>. Because of this, PMOSFET devices are used as high-side switches. The following simulation use the Qucs-S model for a IRF4905 device.</p>
+<figure class="align-default" id="id2">
+<img alt="../../_images/1_1_PMOSFET_CurveTracer.png" class="with-border" src="../../_images/1_1_PMOSFET_CurveTracer.png"/>
+<figcaption>
+<p><span class="caption-text">PMOSFET DCIV curves.</span></p>
+</figcaption>
+</figure>
+<p>The next simulation shows how the PMOSFET device can be driven from a GPO (without additional drivers) as it requires less than 1 mA to reach saturation.</p>
+<figure class="align-default" id="id3">
+<img alt="../../_images/1_2_PMOSFET_Switch_FromGPO.png" class="with-border" src="../../_images/1_2_PMOSFET_Switch_FromGPO.png"/>
+<figcaption>
+<p><span class="caption-text">PMOSFET as a digitally-controlled switch. Low input: ON, High input: OFF.</span></p>
+</figcaption>
+</figure>
+<p>Notice that in the previous arrangement, the PMOS requires a low-voltage input to turn on, but the logic can be easily inverted by using a NPN transistor.</p>
+<figure class="align-default" id="id4">
+<img alt="../../_images/1_3_PMOSFET_Switch_FromGPO_Inverted.png" class="with-border" src="../../_images/1_3_PMOSFET_Switch_FromGPO_Inverted.png"/>
+<figcaption>
+<p><span class="caption-text">PMOSFET as a digitally-controlled switch.  Low input: OFF, High input: ON.</span></p>
+</figcaption>
+</figure>
 </section>
-<section id="couplers">
-<h3>Couplers</h3>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>#</p></th>
-<th class="head"><p>Project</p></th>
-<th class="head"><p>Frequency</p></th>
-<th class="head"><p>Notes</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="RF/Couplers/MS_Coupler_2000MHz_prj/index.html"><span class="doc std std-doc">RF.C.01</span></a></p></td>
-<td><p><a class="reference internal" href="RF/Couplers/MS_Coupler_2000MHz_prj/index.html"><span class="doc std std-doc">Directional Coupler</span></a></p></td>
-<td><p>2000 MHz</p></td>
-<td><p>Microstrip. RO4003C</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="RF/Couplers/MS_BranchLine_2000MHz_prj/index.html"><span class="doc std std-doc">RF.C.02</span></a></p></td>
-<td><p><a class="reference internal" href="RF/Couplers/MS_BranchLine_2000MHz_prj/index.html"><span class="doc std std-doc">Branch-Line</span></a></p></td>
-<td><p>2000 MHz</p></td>
-<td><p>Microstrip. RO4003C</p></td>
-</tr>
-</tbody>
-</table>
+<section id="nmosfet-devices">
+<h2>NMOSFET Devices</h2>
+<p>NMOSFET devices are used as low-side switches</p>
+<p><strong>ON mode</strong></p>
+<div class="math notranslate nohighlight">
+\[ V_{GS} &gt; V_{th}\]</div>
+<p><strong>OFF mode</strong></p>
+<div class="math notranslate nohighlight">
+\[ V_{GS} &lt; V_{th}\]</div>
+<p>Typically, <span class="math notranslate nohighlight">\(V_{th} ~ 2 V\)</span>. Because of this, PMOSFET devices are used as high-side switches. The following simulation use the Qucs-S model for a IRF510 device.</p>
+<figure class="align-default" id="id5">
+<img alt="../../_images/2_1_NMOSFET_CurveTracer.png" class="with-border" src="../../_images/2_1_NMOSFET_CurveTracer.png"/>
+<figcaption>
+<p><span class="caption-text">NMOSFET DCIV curves.</span></p>
+</figcaption>
+</figure>
+<p>Similarly as with the PMOSFET, the NMOSFET requires a tiny gate current to be tuned on and has a low channel resistance.</p>
+<figure class="align-default" id="id6">
+<img alt="../../_images/2_2_NMOSFET_Switch.png" class="with-border" src="../../_images/2_2_NMOSFET_Switch.png"/>
+<figcaption>
+<p><span class="caption-text">NMOSFET as a low-side switch.</span></p>
+</figcaption>
+</figure>
+<p>Notice that it requires a high gate voltage to get proper saturation. In general, GPOs cannot provide such voltage. The next circuit fixes that by driving the NMOSFET with a NPN transistor, so that it can be triggered with lower voltages</p>
+<figure class="align-default" id="id7">
+<img alt="../../_images/2_3_NMOSFET_Switch_NPN.png" class="with-border" src="../../_images/2_3_NMOSFET_Switch_NPN.png"/>
+<figcaption>
+<p><span class="caption-text">NMOSFET as a low-side switch driven with a NPN transistor to lower the control voltage</span></p>
+</figcaption>
+</figure>
 </section>
-</section>
-<section id="general-electronics">
-<h2>General Electronics</h2>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>#</p></th>
-<th class="head"><p>Project</p></th>
-<th class="head"><p>Notes</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="General_Electronics/PWM_as_DAC_prj/index.html"><span class="doc std std-doc">GE.01</span></a></p></td>
-<td><p><a class="reference internal" href="General_Electronics/PWM_as_DAC_prj/index.html"><span class="doc std std-doc">How to use a PWM output to get an analog voltage</span></a></p></td>
-<td><p>Get an analog voltage from a microcontroller PWM output</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="General_Electronics/MOSFET_switch_prj/index.html"><span class="doc std std-doc">GE.02</span></a></p></td>
-<td><p><a class="reference internal" href="General_Electronics/MOSFET_switch_prj/index.html"><span class="doc std std-doc">How to use a MOSFET as a switch</span></a></p></td>
-<td><p>Use NMOSFETs or PMOSFETs as low-side or high-side switches</p></td>
-</tr>
-</tbody>
-</table>
+<section id="references">
+<h2>References</h2>
+<ol class="arabic simple">
+<li><p>Rohm Semiconductor. “Basics of Si Power Devices”</p></li>
+</ol>
 </section>
 </section>
 </div><div class="flex justify-between items-center pt-6 mt-12 border-t border-border gap-4">
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#introduction'" class="reference internal" href="#introduction">Introduction</a><ul>
-<li><a :data-current="activeSection === '#open-source-rf-engineering-software'" class="reference internal" href="#open-source-rf-engineering-software">Open-Source RF Engineering Software</a></li>
-</ul>
-</li>
-<li><a :data-current="activeSection === '#rf-projects'" class="reference internal" href="#rf-projects">RF Projects</a><ul>
-<li><a :data-current="activeSection === '#filters'" class="reference internal" href="#filters">Filters</a></li>
-<li><a :data-current="activeSection === '#couplers'" class="reference internal" href="#couplers">Couplers</a></li>
-</ul>
-</li>
-<li><a :data-current="activeSection === '#general-electronics'" class="reference internal" href="#general-electronics">General Electronics</a></li>
+<li><a :data-current="activeSection === '#introduction'" class="reference internal" href="#introduction">Introduction</a></li>
+<li><a :data-current="activeSection === '#comparison-over-bjts'" class="reference internal" href="#comparison-over-bjts">Comparison over BJTs</a></li>
+<li><a :data-current="activeSection === '#low-side-and-high-side-switches'" class="reference internal" href="#low-side-and-high-side-switches">Low-Side and High-Side Switches</a></li>
+<li><a :data-current="activeSection === '#pmosfet-devices'" class="reference internal" href="#pmosfet-devices">PMOSFET Devices</a></li>
+<li><a :data-current="activeSection === '#nmosfet-devices'" class="reference internal" href="#nmosfet-devices">NMOSFET Devices</a></li>
+<li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
 </ul>
 </div>
 </aside>
@@ -233,9 +242,11 @@
 </div>
 </footer>
 </div>
-<script src="_static/documentation_options.js?v=5929fcd5"></script>
-<script src="_static/doctools.js?v=fd6eb6e6"></script>
-<script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-<script defer="defer" src="_static/theme.js?v=582b20c5"></script>
+<script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+<script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+<script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+<script defer="defer" src="../../_static/theme.js?v=582b20c5"></script>
+<script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 </body>
 </html>

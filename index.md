@@ -41,3 +41,4 @@ The examples in this repo use the following tools
 | #  |      Project        |  Notes    |
 |--- |---------------------|-------------|
 |[GE.01](/General_Electronics/PWM_as_DAC_prj/index) |[How to use a PWM output to get an analog voltage](/General_Electronics/PWM_as_DAC_prj/index)|Get an analog voltage from a microcontroller PWM output|
+|[GE.02](/General_Electronics/MOSFET_switch_prj/index) |[How to use a MOSFET as a switch](/General_Electronics/MOSFET_switch_prj/index)|Use NMOSFETs or PMOSFETs as low-side or high-side switches|

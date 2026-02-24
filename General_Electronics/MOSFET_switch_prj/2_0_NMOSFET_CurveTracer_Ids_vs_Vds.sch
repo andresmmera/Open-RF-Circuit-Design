@@ -1,9 +1,9 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=-607,-450,2052,1204,0.589655,0,120>
+  <View=-158,20,1639,1000,0.872449,0,0>
   <Grid=10,10,1>
-  <DataSet=2_0_NMOSFET_CurveTracer.dat>
-  <DataDisplay=2_0_NMOSFET_CurveTracer.dpl>
+  <DataSet=2_0_NMOSFET_CurveTracer_Ids_vs_Vds.dat>
+  <DataDisplay=2_0_NMOSFET_CurveTracer_Ids_vs_Vds.dpl>
   <OpenDisplay=0>
   <Script=1_0_NMOSFET_CurveTracer.m>
   <RunScript=0>
@@ -43,17 +43,22 @@
   <150 410 190 410 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 880 599 550 329 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
+  <Rect 930 450 466 280 3 #c0c0c0 1 00 1 -4.5 0.2 -3.07895 1 -0.937758 2 10.3153 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
+	<"ngspice/2_0_NMOSFET_CurveTracer_Ids_vs_Vgs:sw1.i(vids)" #0000ff 0 3 0 0 0>
+  </Rect>
+  <Rect 930 824 477 294 3 #c0c0c0 1 00 1 0 2 12 1 -0.937758 2 10.3153 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
 	<"ngspice/sw2.i(vids)" #0000ff 0 3 0 0 0>
-	  <Mkr 12/2 352 -205 3 0 0>
-	  <Mkr 2.08696/6 150 -410 3 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 1360 520 12 #ff0000 0 "OFF region">
-  <Text 910 270 12 #ff0000 0 "ON region">
-  <Rectangle 920 300 60 120 #ff0000 2 1 #c0c0c0 1 0>
-  <Rectangle 1370 550 70 30 #ff0000 2 1 #c0c0c0 1 0>
   <Text 70 60 20 #000000 0 "NMOSFET Curve Tracer">
   <Text 70 160 12 #000000 0 "In a NMOSFET device, the channel draws current then VGS exceeds certain threshold.\nThis means that the gate voltage must be higher than the source voltage to draw current.\n\nIn the OFF region, VDS is maximum as "the switch is open", but there's no current flowing through the channel">
+  <Text 960 380 12 #ff0000 0 "OFF region">
+  <Text 1220 240 12 #ff0000 0 "ON region">
+  <Rectangle 1310 190 60 120 #ff0000 2 1 #c0c0c0 1 0>
+  <Rectangle 950 410 140 30 #ff0000 2 1 #c0c0c0 1 0>
+  <Rectangle 1270 780 140 30 #ff0000 2 1 #c0c0c0 1 0>
+  <Text 1290 750 12 #ff0000 0 "OFF region">
+  <Rectangle 970 550 60 120 #ff0000 2 1 #c0c0c0 1 0>
+  <Text 1040 570 12 #ff0000 0 "ON region">
 </Paintings>

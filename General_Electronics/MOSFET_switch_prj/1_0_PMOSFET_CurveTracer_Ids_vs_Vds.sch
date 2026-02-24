@@ -1,9 +1,9 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=-624,-469,2070,1413,0.582029,0,240>
+  <View=-267,-44,1908,1178,0.721032,0,26>
   <Grid=10,10,1>
-  <DataSet=1_0_PMOSFET_CurveTracer.dat>
-  <DataDisplay=1_0_PMOSFET_CurveTracer.dpl>
+  <DataSet=1_0_PMOSFET_CurveTracer_Ids_vs_Vds.dat>
+  <DataDisplay=1_0_PMOSFET_CurveTracer_Ids_vs_Vds.dpl>
   <OpenDisplay=0>
   <Script=1_0_NMOSFET_CurveTracer.m>
   <RunScript=0>
@@ -44,17 +44,22 @@
   <190 420 390 420 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 880 599 550 329 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
-	<"ngspice/sw2.i(vids)" #0000ff 0 3 0 0 0>
-	  <Mkr 11.4783/-3 386 -178 3 0 0>
-	  <Mkr 1.04348/-4.5 118 -429 3 0 0>
+  <Rect 950 430 466 280 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 1 0 0 "" "" "">
+	<"ngspice/1_0_PMOSFET_CurveTracer_Ids_vs_Vgs:sw1.i(vids)" #0000ff 0 3 0 0 0>
+  </Rect>
+  <Rect 950 804 477 294 3 #c0c0c0 1 00 1 0 0.2 1 1 -0.1 0.5 1.1 1 -0.1 0.5 1.1 315 0 225 1 0 0 "" "" "">
+	<"ngspice/1_0_PMOSFET_CurveTracer_Ids_vs_Vds:sw2.i(vids)" #0000ff 1 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 1360 520 12 #ff0000 0 "OFF region">
-  <Text 910 270 12 #ff0000 0 "ON region">
-  <Rectangle 900 300 60 120 #ff0000 2 1 #c0c0c0 1 0>
-  <Rectangle 1370 550 70 30 #ff0000 2 1 #c0c0c0 1 0>
   <Text 70 60 20 #000000 0 "PMOSFET Curve Tracer">
   <Text 60 120 12 #000000 0 "In a PMOSFET device, the channel draws current then VGS is below a certain threshold.\nIn this DUT, the IDS current starts flowing when VGS is below -3V, i.e., the gate voltage \nmust be lower than the source voltage.\n\nThe lower the gate voltage is wrt to the source voltage, the higher the current the device draws.\n\nIn the OFF region, VDS is maximum as "the switch is open", but there's no current flowing through the channel">
+  <Text 1290 360 12 #ff0000 0 "OFF region">
+  <Text 970 310 12 #ff0000 0 "ON region">
+  <Rectangle 970 170 60 120 #ff0000 2 1 #c0c0c0 1 0>
+  <Rectangle 1260 390 140 30 #ff0000 2 1 #c0c0c0 1 0>
+  <Rectangle 1290 760 140 30 #ff0000 2 1 #c0c0c0 1 0>
+  <Text 1310 730 12 #ff0000 0 "OFF region">
+  <Rectangle 960 530 60 120 #ff0000 2 1 #c0c0c0 1 0>
+  <Text 1030 550 12 #ff0000 0 "ON region">
 </Paintings>
