@@ -16,7 +16,7 @@ The project files are available [here](https://github.com/andresmmera/Open-RF-Ci
 
 ### Ideal Coupled Transmission Lines
 
-The design starts by synthesizing the filter with ideal coupled lines. This can be done using the Filter Synthesis Tool from the Qucs-S suite.
+The design starts by synthesizing the filter with ideal transmission lines. This can be done using the Filter Synthesis Tool from the Qucs-S suite.
 
 
 
@@ -41,7 +41,7 @@ The filter is to be implemented on a 20 mil RO4003C substrate, whose properties 
 
 
 
-The Qucs-S Filter Tool very convenient here as it can also synthesize MS coupled lines.
+The Qucs-S Filter Tool very convenient here as it can also synthesize MS transmission lines.
 
 ```{figure} images/1_Ideal_Transmission_Lines/1_2_MS_Lines_Synthesis.png
 ---

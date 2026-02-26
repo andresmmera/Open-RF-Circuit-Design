@@ -1,16 +1,16 @@
-# Microstrip Stepped-Z Lowpass Filter
+# Microstrip Quarter-Wave Bandstop Filter
 
 ## Introduction
 
-This is a tutorial on how to build a microstrip Stepped-Z lowpass filter.
+This is a tutorial on how to build a microstrip Quarter-Wave BSf.
 
-The project files are available [here](https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/LPF/Stepped-Z_LPF_o5_2GHz_prj)
+The project files are available [here](https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/BSF/QW_Lines_BSF_5GHz_prj)
 
 | Parameter | Value | Band |
 |---|---|---|
-|Insertion loss | < 1.5 dB | [0, 2] GHz |
-|Stopband rejection | > 20 dB |> 4 GHz|
-|Return loss | < -15 dB |[0, 2] GHz |
+|Insertion loss | < 1 dB | < 4 GHz |
+|Stopband rejection | > 20 dB | [4.5; 5.3] GHz|
+|Return loss | < -15 dB |<4 GHz |
 
 
 
@@ -19,13 +19,12 @@ The project files are available [here](https://github.com/andresmmera/Open-RF-Ci
 The design starts by synthesizing the filter with ideal transmission lines. This can be done using the Filter Synthesis Tool from the Qucs-S suite.
 
 
-
-```{figure} images/1_Ideal_Transmission_Lines/1_1_IdealTranmissionLines.png
+```{figure} images/1_Ideal_Transmission_Lines/1_IdealTranmissionLines.png
 ---
 class: with-border
 ---
 
-Stepped-Z LPF. Simulation with ideal transmission lines
+Quarter-wavelength BSF. Simulation with ideal transmission lines
 ```
 
 ### Microstrip Implementation
@@ -43,20 +42,12 @@ The filter is to be implemented on a 20 mil RO4003C substrate, whose properties 
 
 The Qucs-S Filter Tool very convenient here as it can also synthesize MS transmission lines.
 
-```{figure} images/1_Ideal_Transmission_Lines/1_2_MS_Lines_Synthesis.png
+```{figure} images/2_MS_Lines/2_1_MS_Lines_Filter.png
 ---
 class: with-border
 ---
 
-Synthesis of MS lines with the Qucs-S Filter Tool
-```
-
-```{figure} images/2_MS_Lines/2_1_MS_SteppedZ_Schematic.png
----
-class: with-border
----
-
-Simulation of the Stepped-Z LPF with microstrip lines
+Simulation of the Quarter-Wave BSF with microstrip lines
 ```
 
 #### Simulation in Sonnet Lite
@@ -65,17 +56,6 @@ Once the filter response is tuned, the circuit is laid-out and simulated in Sonn
 
 ##### Layout
 
-After tuning the response for meeting the design parameters, the filter dimmensions are the following
-
-|Parameter|Dimmensions|
-|---|---|
-|L1|4.11 mm|
-|W1|100 μm|
-|L2|5.62 mm|
-|W2|5 mm|
-|L3|8.62 mm|
-|W3|100 μm|
-
 ```{figure} images/3_Sonnet_Lite/3_1_Layout.png
 ---
 class: with-border
@@ -83,6 +63,16 @@ class: with-border
 
 Layout simulated in Sonnet Lite
 ```
+The filter dimmensions are the following:
+
+|Parameter|Dimmensions|
+|---|---|
+|W0|1.1 mm|
+|$\lambda/4$|10.5 mm|
+|W1|100 μm|
+|W2|270 μm|
+|W3|100 μm|
+
 
 ##### Insertion Loss
 
