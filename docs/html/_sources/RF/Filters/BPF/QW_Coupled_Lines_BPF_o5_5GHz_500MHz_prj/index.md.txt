@@ -69,7 +69,7 @@ Once the filter response is tuned, the circuit is laid-out and simulated in Sonn
 
 ##### Layout
 
-After tuning the response for meeting the design parameters, the filter dimmensions differ slightly from those obtained from the MS models simulation
+After tuning the response for meeting the design parameters, the filter dimmensions slightly differ from those obtained from the MS models simulation
 
 |Parameter|MS models|Sonnet Lite|
 |---|---|---|

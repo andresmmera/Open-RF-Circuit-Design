@@ -21,12 +21,12 @@
 <meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="#030711" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Stubbed Microstrip Coupled Line Filter | Circuit Design Examples</title>
-<meta content="Stubbed Microstrip Coupled Line Filter | Circuit Design Examples" property="og:title"/>
-<meta content="Stubbed Microstrip Coupled Line Filter | Circuit Design Examples" name="twitter:title"/>
+<title>Microstrip Stepped-Z Lowpass Filter | Circuit Design Examples</title>
+<meta content="Microstrip Stepped-Z Lowpass Filter | Circuit Design Examples" property="og:title"/>
+<meta content="Microstrip Stepped-Z Lowpass Filter | Circuit Design Examples" name="twitter:title"/>
 <link href="../../../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
 <link href="../../../../_static/theme.css?v=73505e79" rel="stylesheet" type="text/css"/>
-<link href="https://andresmmera.github.io/Open-RF-Circuit-Design/RF/Filters/BPF/QW_Coupled_Lines_w_stubs_BPF_o5_5GHz_500MHz_prj/index.html" rel="canonical"/>
+<link href="https://andresmmera.github.io/Open-RF-Circuit-Design/RF/Filters/LPF/Stepped-Z_LPF_o5_2GHz_prj/index.html" rel="canonical"/>
 <link href="../../../../search.html" rel="search" title="Search"/>
 <link href="../../../../genindex.html" rel="index" title="Index"/>
 </head>
@@ -102,15 +102,15 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Stubbed Microstrip Coupled Line Filter</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Microstrip Stepped-Z Lowpass Filter</span>
 </nav>
 <div id="content" role="main">
-<section class="tex2jax_ignore mathjax_ignore" id="stubbed-microstrip-coupled-line-filter">
-<h1>Stubbed Microstrip Coupled Line Filter</h1>
+<section class="tex2jax_ignore mathjax_ignore" id="microstrip-stepped-z-lowpass-filter">
+<h1>Microstrip Stepped-Z Lowpass Filter</h1>
 <section id="introduction">
 <h2>Introduction</h2>
-<p>This is a tutorial on how to build a stubbed microstrip coupled line filter. This is a variant of the classical coupled-line filter where the stubs are added so as to have a lower coupling in the input and output coupled lines. This leads to a significantly wider gap in these lines with respect to the classical QW coupled lines filter, which makes this filter more suitable for fabrication.</p>
-<p>The design goals are the same as in the <a class="reference internal" href="../QW_Coupled_Lines_BPF_o5_5GHz_500MHz_prj/index.html"><span class="doc std std-doc">classical quarter-wavelength coupled line example</span></a>).</p>
+<p>This is a tutorial on how to build a microstrip Stepped-Z lowpass filter.</p>
+<p>The project files are available <a class="reference external" href="https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/LPF/Stepped-Z_LPF_o5_2GHz_prj" rel="nofollow noopener">here<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -120,104 +120,132 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Insertion loss</p></td>
-<td><p>&lt; 1 dB</p></td>
-<td><p>[4.8, 5.2] GHz</p></td>
+<td><p>&lt; 1.5 dB</p></td>
+<td><p>[0, 2] GHz</p></td>
 </tr>
 <tr class="row-odd"><td><p>Stopband rejection</p></td>
-<td><p>&gt; 25 dB</p></td>
-<td><p>&lt; 4 GHz, &gt; 6 GHz</p></td>
+<td><p>&gt; 20 dB</p></td>
+<td><p>&gt; 4 GHz</p></td>
 </tr>
 <tr class="row-even"><td><p>Return loss</p></td>
 <td><p>&lt; -15 dB</p></td>
-<td><p>[4.8, 5.2] GHz</p></td>
+<td><p>[0, 2] GHz</p></td>
 </tr>
 </tbody>
 </table>
-<p>The project files are available <a class="reference external" href="https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/BPF/QW_Coupled_Lines_w_stubs_BPF_o5_5GHz_500MHz_prj" rel="nofollow noopener">here<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
+<section id="ideal-coupled-transmission-lines">
+<h3>Ideal Coupled Transmission Lines</h3>
+<p>The design starts by synthesizing the filter with ideal coupled lines. This can be done using the Filter Synthesis Tool from the Qucs-S suite.</p>
+<figure class="align-default" id="id1">
+<img alt="../../../../_images/1_1_IdealTranmissionLines1.png" class="with-border" src="../../../../_images/1_1_IdealTranmissionLines1.png"/>
+<figcaption>
+<p><span class="caption-text">Stepped-Z LPF. Simulation with ideal transmission lines</span></p>
+</figcaption>
+</figure>
+</section>
 <section id="microstrip-implementation">
 <h3>Microstrip Implementation</h3>
-<p>The design starts with the classical coupled-line filter (without stubs) and then open-circuit stubs are added at the input and at the output.</p>
-<figure class="align-default" id="id1">
-<img alt="../../../../_images/1_1_Microstrip_Models.png" class="with-border" src="../../../../_images/1_1_Microstrip_Models.png"/>
-<figcaption>
-<p><span class="caption-text">MS Quarter-wave Coupled-Line Filter with stubs</span></p>
-</figcaption>
-</figure>
-<p>After this, the circuit was drawn and simulated in Sonnet Lite. Care must be taken in the box size definition to avoid unintended resonant modes caused by the bounding conditions. Also, some adjustments were made to fit the Sonnet results to the filter prototype response.</p>
+<section id="synthesis">
+<h4>Synthesis</h4>
+<p>The filter is to be implemented on a 20 mil RO4003C substrate, whose properties are:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Dielectric Permittivity</p></td>
+<td><p>3.55</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dissipation Factor (tand)</p></td>
+<td><p>0.0027</p></td>
+</tr>
+</tbody>
+</table>
+<p>The Qucs-S Filter Tool very convenient here as it can also synthesize MS coupled lines.</p>
 <figure class="align-default" id="id2">
-<img alt="../../../../_images/2_1_SonnetLayout.png" class="with-border" src="../../../../_images/2_1_SonnetLayout.png"/>
+<img alt="../../../../_images/1_2_MS_Lines_Synthesis.png" class="with-border" src="../../../../_images/1_2_MS_Lines_Synthesis.png"/>
 <figcaption>
-<p><span class="caption-text">MS Quarter-Wave Coupled-Line Filter Layout in Sonnet Lite</span></p>
+<p><span class="caption-text">Synthesis of MS lines with the Qucs-S Filter Tool</span></p>
 </figcaption>
 </figure>
-<p>The final filter dimmensions after EM-simulation tuning are the following:</p>
+<figure class="align-default" id="id3">
+<img alt="../../../../_images/2_1_MS_SteppedZ_Schematic.png" class="with-border" src="../../../../_images/2_1_MS_SteppedZ_Schematic.png"/>
+<figcaption>
+<p><span class="caption-text">Simulation of the Stepped-Z LPF with microstrip lines</span></p>
+</figcaption>
+</figure>
+</section>
+<section id="simulation-in-sonnet-lite">
+<h4>Simulation in Sonnet Lite</h4>
+<p>Once the filter response is tuned, the circuit is laid-out and simulated in Sonnet Lite. Care must be taken in the box size definition to avoid unintended resonant modes caused by the bounding conditions.</p>
+<section id="layout">
+<h5>Layout</h5>
+<p>After tuning the response for meeting the design parameters, the filter dimmensions are the following</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Stubbed Coupled-Line BPF</p></th>
-<th class="head"><p>Classical Coupled-Line BPF</p></th>
+<th class="head"><p>Dimmensions</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>L1</p></td>
-<td><p>8.84 mm</p></td>
-<td><p>8.93 mm</p></td>
+<td><p>4.11 mm</p></td>
 </tr>
-<tr class="row-odd"><td><p>S1</p></td>
-<td><p>650 μm</p></td>
-<td><p>103 μm</p></td>
+<tr class="row-odd"><td><p>W1</p></td>
+<td><p>100 μm</p></td>
 </tr>
-<tr class="row-even"><td><p>W1</p></td>
-<td><p>900 μm</p></td>
-<td><p>760 μm</p></td>
-</tr>
-<tr class="row-odd"><td><p>L2</p></td>
-<td><p>8.67 mm</p></td>
-<td><p>8.78 mm</p></td>
-</tr>
-<tr class="row-even"><td><p>S2</p></td>
-<td><p>740 μm</p></td>
-<td><p>510 μm</p></td>
+<tr class="row-even"><td><p>L2</p></td>
+<td><p>5.62 mm</p></td>
 </tr>
 <tr class="row-odd"><td><p>W2</p></td>
-<td><p>1350 mm</p></td>
-<td><p>1.09 mm</p></td>
+<td><p>5 mm</p></td>
 </tr>
-<tr class="row-even"><td><p>Lstub</p></td>
-<td><p>7.9 mm</p></td>
-<td><p>-</p></td>
+<tr class="row-even"><td><p>L3</p></td>
+<td><p>8.62 mm</p></td>
 </tr>
-<tr class="row-odd"><td><p>Wstub</p></td>
-<td><p>700 μm</p></td>
-<td><p>-</p></td>
+<tr class="row-odd"><td><p>W3</p></td>
+<td><p>100 μm</p></td>
 </tr>
 </tbody>
 </table>
-<figure class="align-default" id="id3">
-<img alt="../../../../_images/2_2_InsertionLoss_Broadband.png" class="with-border" src="../../../../_images/2_2_InsertionLoss_Broadband.png"/>
-<figcaption>
-<p><span class="caption-text">Insertion Loss. Broadband response.</span></p>
-</figcaption>
-</figure>
 <figure class="align-default" id="id4">
-<img alt="../../../../_images/2_2_InsertionLoss_Passband.png" class="with-border" src="../../../../_images/2_2_InsertionLoss_Passband.png"/>
+<img alt="../../../../_images/3_1_Layout.png" class="with-border" src="../../../../_images/3_1_Layout.png"/>
 <figcaption>
-<p><span class="caption-text">Insertion Loss. Passband detail.</span></p>
+<p><span class="caption-text">Layout simulated in Sonnet Lite</span></p>
 </figcaption>
 </figure>
+</section>
+<section id="insertion-loss">
+<h5>Insertion Loss</h5>
 <figure class="align-default" id="id5">
-<img alt="../../../../_images/2_3_GroupDelay.png" class="with-border" src="../../../../_images/2_3_GroupDelay.png"/>
+<img alt="../../../../_images/3_2_InsertionLoss.png" class="with-border" src="../../../../_images/3_2_InsertionLoss.png"/>
+<figcaption>
+<p><span class="caption-text">Insertion loss and return loss. Broadband view.</span></p>
+</figcaption>
+</figure>
+</section>
+<section id="group-delay">
+<h5>Group Delay</h5>
+<figure class="align-default" id="id6">
+<img alt="../../../../_images/3_3_GroupDelay.png" class="with-border" src="../../../../_images/3_3_GroupDelay.png"/>
 <figcaption>
 <p><span class="caption-text">Group Delay</span></p>
 </figcaption>
 </figure>
-<p>The following figure compares the response of the stubbed coupled-line filter with its classical version (without stubs). Notice that the stubbed version has better rejection, but also higher insertion loss in passband,</p>
-<figure class="align-default" id="id6">
-<img alt="../../../../_images/2_4_Comparsison_wrt_wstubs.png" class="with-border" src="../../../../_images/2_4_Comparsison_wrt_wstubs.png"/>
+</section>
+<section id="comparison-with-ms-models">
+<h5>Comparison with MS models</h5>
+<p>The following graphs shows a comparison between the response obtained with Qucsator and that obtained from EM simulation in Sonnet Lite. As expected, the cutoff was pulled towards lower frequencies in the EM simulation. The insertion loss is also higher.</p>
+<figure class="align-default" id="id7">
+<img alt="../../../../_images/3_4_Comparison_wrt_Qucsator.png" class="with-border" src="../../../../_images/3_4_Comparison_wrt_Qucsator.png"/>
 <figcaption>
-<p><span class="caption-text">Comparison between the stubbed coupled line filter and its classical version (without stubs)</span></p>
+<p><span class="caption-text">Group Delay</span></p>
 </figcaption>
 </figure>
+</section>
+</section>
 </section>
 </section>
 </section>
@@ -226,7 +254,18 @@
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#introduction'" class="reference internal" href="#introduction">Introduction</a><ul>
-<li><a :data-current="activeSection === '#microstrip-implementation'" class="reference internal" href="#microstrip-implementation">Microstrip Implementation</a></li>
+<li><a :data-current="activeSection === '#ideal-coupled-transmission-lines'" class="reference internal" href="#ideal-coupled-transmission-lines">Ideal Coupled Transmission Lines</a></li>
+<li><a :data-current="activeSection === '#microstrip-implementation'" class="reference internal" href="#microstrip-implementation">Microstrip Implementation</a><ul>
+<li><a :data-current="activeSection === '#synthesis'" class="reference internal" href="#synthesis">Synthesis</a></li>
+<li><a :data-current="activeSection === '#simulation-in-sonnet-lite'" class="reference internal" href="#simulation-in-sonnet-lite">Simulation in Sonnet Lite</a><ul>
+<li><a :data-current="activeSection === '#layout'" class="reference internal" href="#layout">Layout</a></li>
+<li><a :data-current="activeSection === '#insertion-loss'" class="reference internal" href="#insertion-loss">Insertion Loss</a></li>
+<li><a :data-current="activeSection === '#group-delay'" class="reference internal" href="#group-delay">Group Delay</a></li>
+<li><a :data-current="activeSection === '#comparison-with-ms-models'" class="reference internal" href="#comparison-with-ms-models">Comparison with MS models</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

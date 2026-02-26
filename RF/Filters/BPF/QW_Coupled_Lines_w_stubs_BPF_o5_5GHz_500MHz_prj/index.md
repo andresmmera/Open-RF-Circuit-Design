@@ -37,6 +37,20 @@ class: with-border
 MS Quarter-Wave Coupled-Line Filter Layout in Sonnet Lite
 ```
 
+The final filter dimmensions after EM-simulation tuning are the following:
+
+|Parameter|Stubbed Coupled-Line BPF|Classical Coupled-Line BPF|
+|---|---|---|
+|L1|8.84 mm|8.93 mm|
+|S1|650 μm|103 μm|
+|W1|900 μm|760 μm|
+|L2|8.67 mm|8.78 mm|
+|S2|740 μm|510 μm|
+|W2|1350 mm|1.09 mm|
+|Lstub|7.9 mm|-|
+|Wstub|700 μm|-|
+
+
 ```{figure} images/2_Sonnet/2_2_InsertionLoss_Broadband.png
 ---
 class: with-border

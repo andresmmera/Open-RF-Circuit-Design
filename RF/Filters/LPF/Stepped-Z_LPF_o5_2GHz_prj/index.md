@@ -1,0 +1,120 @@
+# Microstrip Stepped-Z Lowpass Filter
+
+## Introduction
+
+This is a tutorial on how to build a microstrip Stepped-Z lowpass filter.
+
+The project files are available [here](https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/LPF/Stepped-Z_LPF_o5_2GHz_prj)
+
+| Parameter | Value | Band |
+|---|---|---|
+|Insertion loss | < 1.5 dB | [0, 2] GHz |
+|Stopband rejection | > 20 dB |> 4 GHz|
+|Return loss | < -15 dB |[0, 2] GHz |
+
+
+
+### Ideal Coupled Transmission Lines
+
+The design starts by synthesizing the filter with ideal coupled lines. This can be done using the Filter Synthesis Tool from the Qucs-S suite.
+
+
+
+```{figure} images/1_Ideal_Transmission_Lines/1_1_IdealTranmissionLines.png
+---
+class: with-border
+---
+
+Stepped-Z LPF. Simulation with ideal transmission lines
+```
+
+### Microstrip Implementation
+
+#### Synthesis
+
+The filter is to be implemented on a 20 mil RO4003C substrate, whose properties are:
+
+|Property|Value|
+|---|---|
+|Dielectric Permittivity|3.55|
+|Dissipation Factor (tand)|0.0027|
+
+
+
+The Qucs-S Filter Tool very convenient here as it can also synthesize MS coupled lines.
+
+```{figure} images/1_Ideal_Transmission_Lines/1_2_MS_Lines_Synthesis.png
+---
+class: with-border
+---
+
+Synthesis of MS lines with the Qucs-S Filter Tool
+```
+
+```{figure} images/2_MS_Lines/2_1_MS_SteppedZ_Schematic.png
+---
+class: with-border
+---
+
+Simulation of the Stepped-Z LPF with microstrip lines
+```
+
+#### Simulation in Sonnet Lite
+
+Once the filter response is tuned, the circuit is laid-out and simulated in Sonnet Lite. Care must be taken in the box size definition to avoid unintended resonant modes caused by the bounding conditions.
+
+##### Layout
+
+After tuning the response for meeting the design parameters, the filter dimmensions are the following
+
+|Parameter|Dimmensions|
+|---|---|
+|L1|4.11 mm|
+|W1|100 μm|
+|L2|5.62 mm|
+|W2|5 mm|
+|L3|8.62 mm|
+|W3|100 μm|
+
+```{figure} images/3_Sonnet_Lite/3_1_Layout.png
+---
+class: with-border
+---
+
+Layout simulated in Sonnet Lite
+```
+
+##### Insertion Loss
+
+
+```{figure} images/3_Sonnet_Lite/3_2_InsertionLoss.png
+---
+class: with-border
+---
+
+Insertion loss and return loss. Broadband view.
+```
+
+##### Group Delay
+
+
+```{figure} images/3_Sonnet_Lite/3_3_GroupDelay.png
+---
+class: with-border
+---
+
+Group Delay
+```
+
+##### Comparison with MS models
+
+The following graphs shows a comparison between the response obtained with Qucsator and that obtained from EM simulation in Sonnet Lite. As expected, the cutoff was pulled towards lower frequencies in the EM simulation. The insertion loss is also higher.
+
+```{figure} images/3_Sonnet_Lite/3_4_Comparison_wrt_Qucsator.png
+---
+class: with-border
+---
+
+Group Delay
+```
+
