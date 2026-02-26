@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a tutorial on how to build a microstrip Quarter-Wave BSf.
+This is a tutorial on how to build a microstrip Quarter-Wave BSF.
 
 The project files are available [here](https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/BSF/QW_Lines_BSF_5GHz_prj)
 
@@ -56,7 +56,14 @@ Once the filter response is tuned, the circuit is laid-out and simulated in Sonn
 
 ##### Layout
 
-After tuning the response for meeting the design parameters, the filter dimmensions are the following
+```{figure} images/3_Sonnet_Lite/3_1_Layout.png
+---
+class: with-border
+---
+
+Layout simulated in Sonnet Lite
+```
+The filter dimmensions are the following:
 
 |Parameter|Dimmensions|
 |---|---|
@@ -66,14 +73,6 @@ After tuning the response for meeting the design parameters, the filter dimmensi
 |W2|270 μm|
 |W3|100 μm|
 
-
-```{figure} images/3_Sonnet_Lite/3_1_Layout.png
----
-class: with-border
----
-
-Layout simulated in Sonnet Lite
-```
 
 ##### Insertion Loss
 

@@ -21,12 +21,12 @@
 <meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="#030711" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Microstrip Quarter-Wave Bandstop Filter | Circuit Design Examples</title>
-<meta content="Microstrip Quarter-Wave Bandstop Filter | Circuit Design Examples" property="og:title"/>
-<meta content="Microstrip Quarter-Wave Bandstop Filter | Circuit Design Examples" name="twitter:title"/>
+<title>Lumped HPF with Printed Inductors | Circuit Design Examples</title>
+<meta content="Lumped HPF with Printed Inductors | Circuit Design Examples" property="og:title"/>
+<meta content="Lumped HPF with Printed Inductors | Circuit Design Examples" name="twitter:title"/>
 <link href="../../../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
 <link href="../../../../_static/theme.css?v=73505e79" rel="stylesheet" type="text/css"/>
-<link href="https://andresmmera.github.io/Open-RF-Circuit-Design/RF/Filters/BSF/QW_Lines_BSF_5GHz_prj/index.html" rel="canonical"/>
+<link href="https://andresmmera.github.io/Open-RF-Circuit-Design/RF/Filters/HPF/Lumped_HPF_2_GHz_prj/index.html" rel="canonical"/>
 <link href="../../../../search.html" rel="search" title="Search"/>
 <link href="../../../../genindex.html" rel="index" title="Index"/>
 </head>
@@ -102,15 +102,15 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Microstrip Quarter-Wave Bandstop Filter</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Lumped HPF with Printed Inductors</span>
 </nav>
 <div id="content" role="main">
-<section class="tex2jax_ignore mathjax_ignore" id="microstrip-quarter-wave-bandstop-filter">
-<h1>Microstrip Quarter-Wave Bandstop Filter</h1>
+<section class="tex2jax_ignore mathjax_ignore" id="lumped-hpf-with-printed-inductors">
+<h1>Lumped HPF with Printed Inductors</h1>
 <section id="introduction">
 <h2>Introduction</h2>
-<p>This is a tutorial on how to build a microstrip Quarter-Wave BSF.</p>
-<p>The project files are available <a class="reference external" href="https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/BSF/QW_Lines_BSF_5GHz_prj" rel="nofollow noopener">here<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
+<p>This is a tutorial on how to build a lumped highpass filter with printed inductors</p>
+<p>The project files are available <a class="reference external" href="https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/HPF/Lumped_HPF_2_GHz_prj" rel="nofollow noopener">here<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -121,33 +121,36 @@
 <tbody>
 <tr class="row-even"><td><p>Insertion loss</p></td>
 <td><p>&lt; 1 dB</p></td>
-<td><p>&lt; 4 GHz</p></td>
+<td><p>[2, 4] GHz</p></td>
 </tr>
 <tr class="row-odd"><td><p>Stopband rejection</p></td>
-<td><p>&gt; 20 dB</p></td>
-<td><p>[4.5; 5.3] GHz</p></td>
+<td><p>&gt; 30 dB</p></td>
+<td><p>&lt; 1.5 GHz</p></td>
 </tr>
 <tr class="row-even"><td><p>Return loss</p></td>
 <td><p>&lt; -15 dB</p></td>
-<td><p>&lt;4 GHz</p></td>
+<td><p>[2, 4] GHz</p></td>
 </tr>
 </tbody>
 </table>
-<section id="ideal-coupled-transmission-lines">
-<h3>Ideal Coupled Transmission Lines</h3>
-<p>The design starts by synthesizing the filter with ideal transmission lines. This can be done using the Filter Synthesis Tool from the Qucs-S suite.</p>
+<p>A 2-poles elliptic filter satisfies the requirements above. The filter prototype is synthesized using the Qucs-S SP Viewer RF synthesis tools. Then Sonnet Lite, Qucs-S, and Kicad are used.</p>
+<section id="ideal-2-ghz-elliptic-hpf-circuit">
+<h3>Ideal 2 GHz elliptic HPF Circuit</h3>
 <figure class="align-default" id="id1">
-<img alt="../../../../_images/1_IdealTranmissionLines.png" class="with-border" src="../../../../_images/1_IdealTranmissionLines.png"/>
+<img alt="../../../../_images/1_1_Elliptic_HPF_Schematic.png" class="with-border" src="../../../../_images/1_1_Elliptic_HPF_Schematic.png"/>
 <figcaption>
-<p><span class="caption-text">Quarter-wavelength BSF. Simulation with ideal transmission lines</span></p>
+<p><span class="caption-text">Ideal elliptic HPF 2 GHz schematic</span></p>
 </figcaption>
 </figure>
-</section>
-<section id="microstrip-implementation">
-<h3>Microstrip Implementation</h3>
-<section id="synthesis">
-<h4>Synthesis</h4>
-<p>The filter is to be implemented on a 20 mil RO4003C substrate, whose properties are:</p>
+<figure class="align-default" id="id2">
+<img alt="../../../../_images/1_2_Elliptic_HPF_Simulation.png" class="with-border" src="../../../../_images/1_2_Elliptic_HPF_Simulation.png"/>
+<figcaption>
+<p><span class="caption-text">Ideal elliptic HPF 2 GHz Qucs-S simulation</span></p>
+</figcaption>
+</figure>
+<p>The next step is to synthesize the inductors with PCB traces. A 20-mil RO4003C substrate will be used. As a first approach the MLIN component on the RO4003C substrate is used for estimating the length of the traces. The width is set to 200 μm to minize the length of the trace, while keeping a a reasonable width for fabrication.</p>
+<section id="ro4003c-properties">
+<h4>RO4003C properties</h4>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Property</p></th>
@@ -163,79 +166,44 @@
 </tr>
 </tbody>
 </table>
-<p>The Qucs-S Filter Tool very convenient here as it can also synthesize MS transmission lines.</p>
-<figure class="align-default" id="id2">
-<img alt="../../../../_images/2_1_MS_Lines_Filter.png" class="with-border" src="../../../../_images/2_1_MS_Lines_Filter.png"/>
-<figcaption>
-<p><span class="caption-text">Simulation of the Quarter-Wave BSF with microstrip lines</span></p>
-</figcaption>
-</figure>
 </section>
 <section id="simulation-in-sonnet-lite">
 <h4>Simulation in Sonnet Lite</h4>
-<p>Once the filter response is tuned, the circuit is laid-out and simulated in Sonnet Lite. Care must be taken in the box size definition to avoid unintended resonant modes caused by the bounding conditions.</p>
-<section id="layout">
-<h5>Layout</h5>
+<p>The inductors are laid out into Kicad with a meander shape in order to have a compact design.</p>
 <figure class="align-default" id="id3">
-<img alt="../../../../_images/3_1_Layout1.png" class="with-border" src="../../../../_images/3_1_Layout1.png"/>
+<img alt="../../../../_images/2_1_Meander_Sonnet.png" class="with-border" src="../../../../_images/2_1_Meander_Sonnet.png"/>
 <figcaption>
-<p><span class="caption-text">Layout simulated in Sonnet Lite</span></p>
+<p><span class="caption-text">L1 microstrip meander implementation in Sonnet Lite</span></p>
 </figcaption>
 </figure>
-<p>The filter dimmensions are the following:</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Dimmensions</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>W0</p></td>
-<td><p>1.1 mm</p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\lambda/4\)</span></p></td>
-<td><p>10.5 mm</p></td>
-</tr>
-<tr class="row-even"><td><p>W1</p></td>
-<td><p>100 μm</p></td>
-</tr>
-<tr class="row-odd"><td><p>W2</p></td>
-<td><p>270 μm</p></td>
-</tr>
-<tr class="row-even"><td><p>W3</p></td>
-<td><p>100 μm</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="insertion-loss">
-<h5>Insertion Loss</h5>
+<p>Once the meander is simulated in Sonnet Lite, it is convenient to compare their performance with the ideal inductors. For doing this, the S-parameter data obtained from Sonnet Lite are exported into a Touchstone file and then compared those of an ideal inductor in Qucs-S.</p>
 <figure class="align-default" id="id4">
-<img alt="../../../../_images/3_2_InsertionLoss1.png" class="with-border" src="../../../../_images/3_2_InsertionLoss1.png"/>
+<img alt="../../../../_images/2_2_L1_Sonnet_vs_ideal_inductor.png" class="with-border" src="../../../../_images/2_2_L1_Sonnet_vs_ideal_inductor.png"/>
 <figcaption>
-<p><span class="caption-text">Insertion loss and return loss. Broadband view.</span></p>
+<p><span class="caption-text">Analysis of L1 after being synthesized as a meander</span></p>
 </figcaption>
 </figure>
-</section>
-<section id="group-delay">
-<h5>Group Delay</h5>
 <figure class="align-default" id="id5">
-<img alt="../../../../_images/3_3_GroupDelay1.png" class="with-border" src="../../../../_images/3_3_GroupDelay1.png"/>
+<img alt="../../../../_images/2_3_L2_Sonnet_vs_ideal_inductor.png" class="with-border" src="../../../../_images/2_3_L2_Sonnet_vs_ideal_inductor.png"/>
 <figcaption>
-<p><span class="caption-text">Group Delay</span></p>
+<p><span class="caption-text">Analysis of L2 after being synthesized as a meander</span></p>
 </figcaption>
 </figure>
-</section>
-<section id="comparison-with-ms-models">
-<h5>Comparison with MS models</h5>
-<p>The following graphs shows a comparison between the response obtained with Qucsator and that obtained from EM simulation in Sonnet Lite. As expected, the cutoff was pulled towards lower frequencies in the EM simulation. The insertion loss is also higher.</p>
+<p>Both inductors have an inductance sufficiently close to their ideal counterparts. The Q factor of both inductors at the attenuation poles frequency are good enough to make decent resonators.</p>
+<p>As the meander inductors are no longer ideal inductances, it is need to readjust the filter capacitors so as the elliptic shape is preserved. Also it is needed to replace the ideal capacitors by commercial SMD parts. In this sense, Murata SMD ceramic capacitors will be used. Murata Simsurfing is a nice tool and allows the download of S2P files that can be used in Qucs-S.</p>
 <figure class="align-default" id="id6">
-<img alt="../../../../_images/3_4_Comparison_wrt_Qucsator1.png" class="with-border" src="../../../../_images/3_4_Comparison_wrt_Qucsator1.png"/>
+<img alt="../../../../_images/3_1_HPF_with_MurataCaps.png" class="with-border" src="../../../../_images/3_1_HPF_with_MurataCaps.png"/>
 <figcaption>
-<p><span class="caption-text">Group Delay</span></p>
+<p><span class="caption-text">Elliptic filter simulation with printed inductors and commercial SMD caps</span></p>
 </figcaption>
 </figure>
-</section>
+<p>Sonnet Lite does not allow to include ports inside the simulation box, just only on the box edges. Consequently, having SMD capacitors in the design imply that the filter components must be simulated as independent unit. Unfortunately, this approach misses EM couplings between the inductors and other traces, but the result should be close enough for a 2 GHz HPF. Proceeding this way, the feed lines, and GND via holes are simulated separatedly and then after exporting the S-parameters, simulated all together inside Qucs-S.</p>
+<figure class="align-default" id="id7">
+<img alt="../../../../_images/3_2_HPF_Complete.png" class="with-border" src="../../../../_images/3_2_HPF_Complete.png"/>
+<figcaption>
+<p><span class="caption-text">HPF with EM-simulated feed lines, unions, and GND vias</span></p>
+</figcaption>
+</figure>
 </section>
 </section>
 </section>
@@ -245,16 +213,9 @@
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#introduction'" class="reference internal" href="#introduction">Introduction</a><ul>
-<li><a :data-current="activeSection === '#ideal-coupled-transmission-lines'" class="reference internal" href="#ideal-coupled-transmission-lines">Ideal Coupled Transmission Lines</a></li>
-<li><a :data-current="activeSection === '#microstrip-implementation'" class="reference internal" href="#microstrip-implementation">Microstrip Implementation</a><ul>
-<li><a :data-current="activeSection === '#synthesis'" class="reference internal" href="#synthesis">Synthesis</a></li>
-<li><a :data-current="activeSection === '#simulation-in-sonnet-lite'" class="reference internal" href="#simulation-in-sonnet-lite">Simulation in Sonnet Lite</a><ul>
-<li><a :data-current="activeSection === '#layout'" class="reference internal" href="#layout">Layout</a></li>
-<li><a :data-current="activeSection === '#insertion-loss'" class="reference internal" href="#insertion-loss">Insertion Loss</a></li>
-<li><a :data-current="activeSection === '#group-delay'" class="reference internal" href="#group-delay">Group Delay</a></li>
-<li><a :data-current="activeSection === '#comparison-with-ms-models'" class="reference internal" href="#comparison-with-ms-models">Comparison with MS models</a></li>
-</ul>
-</li>
+<li><a :data-current="activeSection === '#ideal-2-ghz-elliptic-hpf-circuit'" class="reference internal" href="#ideal-2-ghz-elliptic-hpf-circuit">Ideal 2 GHz elliptic HPF Circuit</a><ul>
+<li><a :data-current="activeSection === '#ro4003c-properties'" class="reference internal" href="#ro4003c-properties">RO4003C properties</a></li>
+<li><a :data-current="activeSection === '#simulation-in-sonnet-lite'" class="reference internal" href="#simulation-in-sonnet-lite">Simulation in Sonnet Lite</a></li>
 </ul>
 </li>
 </ul>
@@ -276,7 +237,5 @@
 <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script defer="defer" src="../../../../_static/theme.js?v=582b20c5"></script>
-<script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-<script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 </body>
 </html>

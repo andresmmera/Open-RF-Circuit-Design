@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a tutorial on how to build a microstrip Quarter-Wave BSf.
+This is a tutorial on how to build a microstrip Quarter-Wave BSF.
 
 The project files are available [here](https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/BSF/QW_Lines_BSF_5GHz_prj)
 
