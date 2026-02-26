@@ -1,0 +1,70 @@
+# Stubbed Microstrip Coupled Line Filter
+
+## Introduction
+
+This is a tutorial on how to build a stubbed microstrip coupled line filter. This is a variant of the classical coupled-line filter where the stubs are added so as to have a lower coupling in the input and output coupled lines. This leads to a significantly wider gap in these lines with respect to the classical QW coupled lines filter.
+
+The design goals are essentially the same as in the [classical quarter-wavelength coupled line example](/RF/Filters/BPF/QW_Coupled_Lines_BPF_o5_5GHz_500MHz_prj/index)).
+
+| Parameter | Value | Band |
+|---|---|---|
+|Insertion loss | < 1 dB | [4.8, 5.2] GHz |
+|Stopband rejection | > 25 dB |< 4 GHz, > 6 GHz|
+|Return loss | < -15 dB |[4.8, 5.2] GHz |
+
+The project files are available [here](https://github.com/andresmmera/Open-RF-Circuit-Design/tree/main/RF/Filters/BPF/QW_Coupled_Lines_w_stubs_BPF_o5_5GHz_500MHz_prj)
+
+
+### Microstrip Implementation
+
+The approach is to start with the classical coupled-line filter (without stubs) and add manually add the open-circuit stubs at the input and at the output so that the first gap widens enough without degrading the passband performance.
+
+```{figure} images/1_Microstrip_Models/1_1_Microstrip_Models.png
+---
+class: with-border
+---
+
+MS Quarter-wave Coupled-Line Filter with stubs
+```
+
+Then, the circuit was drawn and simulated in Sonnet Lite. Care must be taken in the box size definition to avoid unintended resonant modes caused by the bounding conditions. Also, some adjustments were made to fit the Sonnet results to the filter prototype response. 
+
+```{figure} images/2_Sonnet/2_1_SonnetLayout.png
+---
+class: with-border
+---
+
+MS Quarter-Wave Coupled-Line Filter Layout in Sonnet Lite
+```
+
+```{figure} images/2_Sonnet/2_2_InsertionLoss_Broadband.png
+---
+class: with-border
+---
+
+Insertion Loss. Broadband response.
+```
+
+```{figure} images/2_Sonnet/2_2_InsertionLoss_Passband.png
+---
+class: with-border
+---
+
+Insertion Loss. Passband detail.
+```
+
+```{figure} images/2_Sonnet/2_3_GroupDelay.png
+---
+class: with-border
+---
+
+Group Delay
+```
+
+```{figure} images/2_Sonnet/2_4_Comparsison_wrt_wstubs.png
+---
+class: with-border
+---
+
+Comparison between the stubbed coupled line filter and its classical version (without stubs)
+```
