@@ -76,5 +76,5 @@
 <Paintings>
   <Text 70 60 20 #000000 0 "Branch-Line Coupler 2000 MHz">
   <Text 140 690 12 #000000 0 "Reference: David M. Pozar, "Microwave Engineering", 4th Edition, 2012. Chapter 7.5">
-  <Text 40 170 12 #000000 0 "Once the behavior is verified using ideal transmission lines,\nthey are replaced by microstrip (MS) models.\n\nThe substrate is RO4003C">
+  <Text 60 120 12 #000000 0 "Once the behavior is verified using ideal transmission lines,\nthey are replaced by microstrip (MS) models.\n\nThe substrate is RO4003C">
 </Paintings>

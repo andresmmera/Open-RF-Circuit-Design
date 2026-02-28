@@ -10,10 +10,15 @@ The Branch-Line coupler is one of the easiest couplers to design, and it is very
 and well known in the literature. It consists of four λ/4 transmission lines: the series 
 lines are Z₀/√2 Ω and the shunt lines are Z₀ Ω.
 
-```{figure} BranchLine-Schematic.png
+```{figure} images/BranchLine-Schematic.png
 :alt: Branch-line Schematic
 ```
 
+The main disadvantage of this structure is its narrow bandwidth. It can be improved by adding an extra box, but this comes with slightly higher insertion loss and, obviously more PCB area.
+
+```{figure} images/DoubleBox-BranchLine-Schematic.png
+:alt: Double-Box Branch-line Schematic
+```
 
 ### Features
 - Simple design
@@ -169,7 +174,7 @@ And this is the Python script for running the simulation:
 ```{raw} html
 <div style="height: 300px; overflow-y: auto; border: 1px solid #ccc; border-radius: 6px;">
 ```
-```{literalinclude} Emerge Scripts/1 - First approach/branchline.py
+```{literalinclude} Emerge Scripts/Single-Box/1 - First approach/branchline.py
 :language: python
 ```
 ```{raw} html
@@ -192,7 +197,7 @@ class: with-border
 EMerge FEM simulation. Phase difference between outputs
 ```
 
-### 3.1 Use design variables for 2.2
+### 3.1 Use design variables from 2.2
 First, the system is modelled using the design variables obtained from step 2.2 as the input
 
 ```{figure} images/3_EM/3_1_FirstApproach/3_1_FirstApproach_Magnitude.png
@@ -229,4 +234,39 @@ class: with-border
 ---
 
 EMerge FEM simulation. Phase difference between outputs
+```
+
+## Double-Box Branch-Line Coupler
+
+Let's take a look at the double-box coupler. The design process is the same as shown before, so let's skip that and jump into the results.
+
+
+The script I've used is this:
+```{raw} html
+<div style="height: 300px; overflow-y: auto; border: 1px solid #ccc; border-radius: 6px;">
+```
+```{literalinclude} Emerge Scripts/Double-Box/2 - Fine Tuning/double-box-branchline.py
+:language: python
+```
+```{raw} html
+</div>
+```
+
+Note that the magnitude response is much broader. The isolation is notably higher, and the phase difference between the outputs remains at 90° over a broader bandwidth. However, it exhibits slightly worse insertion loss on both outputs. This makes sense, given that we now have longer traces between the input and output.
+
+
+```{figure} images/4_DoubleBox/4_1_DoubleBox_EMerge.png
+---
+class: with-border
+---
+
+EMerge FEM simulation for the double-box design
+```
+
+```{figure} images/4_DoubleBox/4_2_Comparison.png
+---
+class: with-border
+---
+
+Comparison between single-box and double-box results
 ```

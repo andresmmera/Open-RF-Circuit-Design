@@ -1,6 +1,6 @@
 <Qucs Schematic 25.2.0>
 <Properties>
-  <View=-510,-333,2231,1127,0.637584,180,76>
+  <View=-450,-333,1889,1480,0.637584,0,301>
   <Grid=10,10,1>
   <DataSet=4_BranchLine_EMerge_FineTuned.dat>
   <DataDisplay=4_BranchLine_EMerge_FineTuned.dpl>
@@ -14,10 +14,10 @@
   <FrameText3=Revision:>
 </Properties>
 <Symbol>
-  <.ID 330 -16 SUB>
+  <.ID 290 -16 SUB>
   <.PortSym 0 0 1 0 P1>
   <Text 20 -10 12 #000000 0 "Emerge FEM simulation (refined)">
-  <Rectangle -10 -20 330 50 #000000 1 1 #c0c0c0 1 0>
+  <Rectangle -10 -20 290 50 #000000 1 1 #c0c0c0 1 0>
 </Symbol>
 <Components>
   <Eqn Eqn1 1 450 770 -28 15 0 0 "S11_dB=dB(S[1,1])" 1 "S21_dB=dB(S[2,1])" 1 "S31_dB=dB(S[3,1])" 1 "S32_dB=dB(S[3,2])" 1 "yes" 0>

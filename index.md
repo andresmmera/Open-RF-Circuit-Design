@@ -4,12 +4,12 @@
 
 This repository showcases self-learning projects in electronics and RF engineering. Contributions or suggestions are welcome. Feel free to reach me out at [andresmmera@protonmail.com](mailto:andresmmera@protonmail.com)
 
-While my primary interest is RF engineering, this repo also includes general electronics designs for experimentation and learning. Bug reports or improvement ideas are appreciated.
+While my primary interest is RF engineering, this repo also includes general electronics designs. Bug reports or improvement ideas are appreciated.
 
 
 ### Open-Source RF Engineering Software
 
-The examples in this repo use the following tools
+The examples in this repo use the following tools:
 
 |      Tool        |  Licensing   | Notes |
 |--- |---------------------|---|
@@ -24,15 +24,15 @@ The examples in this repo use the following tools
 
 ### Filters
 
-| #  |      Project        | Frequency   | Notes    |
-|--- |---------------------|-------------|---------------------|
-| [RF.F.01](/RF/Filters/RF_Filter_Tutorial_prj/index) | [RF Filter Tutorial](/RF/Filters/RF_Filter_Tutorial_prj/index)| 500 MHz    | Lumped LC. Canonical & Direct-Coupled |
-|[RF.F.02](/RF/Filters/Example_Designs_Murata_Parts_prj/index) |[RF Filters with Murata parts](/RF/Filters/Example_Designs_Murata_Parts_prj/index)|500 MHz|Simulations with Murata pspice models|
-|[RF.F.03](/RF/Filters/BPF/QW_Coupled_Lines_BPF_o5_5GHz_500MHz_prj/index) |[MS Coupled-Line Filter](/RF/Filters/BPF/QW_Coupled_Lines_BPF_o5_5GHz_500MHz_prj/index)|5000 MHz|BW = 400 MHz. RO4003C.|
-|[RF.F.04](/RF/Filters/BPF/QW_Coupled_Lines_w_stubs_BPF_o5_5GHz_500MHz_prj/index) |[MS Coupled-Line Filter with stubs](/RF/Filters/BPF/QW_Coupled_Lines_w_stubs_BPF_o5_5GHz_500MHz_prj/index)|5000 MHz|BW = 400 MHz. RO4003C.|
-|[RF.F.05](/RF/Filters/LPF/Stepped-Z_LPF_o5_2GHz_prj/index) |[MS Stepped-Z LPF](/RF/Filters/LPF/Stepped-Z_LPF_o5_2GHz_prj/index)|2000 MHz|RO4003C|
-|[RF.F.06](/RF/Filters/BSF/QW_Lines_BSF_5GHz_prj/index) |[MS Quarter-Wave BSF](/RF/Filters/BSF/QW_Lines_BSF_5GHz_prj/index)|5000 MHz|RO4003C|
-|[RF.F.07](/RF/Filters/HPF/Lumped_HPF_2_GHz_prj/index) |[Lumped HPF with printed inductors](/RF/Filters/HPF/Lumped_HPF_2_GHz_prj/index)|2000 MHz|RO4003C|
+| #  |      Project        | Filter Type |Frequency   | Notes    |
+|--- |---------------------|-------------|-------- | -------------|
+| [RF.F.01](/RF/Filters/RF_Filter_Tutorial_prj/index) | [RF Filter Tutorial](/RF/Filters/RF_Filter_Tutorial_prj/index)| LPF, HPF, BPF, BSF  | 500 MHz |Lumped LC. Canonical & Direct-Coupled |
+|[RF.F.02](/RF/Filters/Example_Designs_Murata_Parts_prj/index) |[RF Filters with Murata parts](/RF/Filters/Example_Designs_Murata_Parts_prj/index)| HPF, BPF |500 MHz|Simulations with Murata pspice models|
+|[RF.F.03](/RF/Filters/BPF/QW_Coupled_Lines_BPF_o5_5GHz_500MHz_prj/index) |[MS Coupled-Line Filter](/RF/Filters/BPF/QW_Coupled_Lines_BPF_o5_5GHz_500MHz_prj/index)| BPF |5000 MHz|BW = 400 MHz. RO4003C.|
+|[RF.F.04](/RF/Filters/BPF/QW_Coupled_Lines_w_stubs_BPF_o5_5GHz_500MHz_prj/index) |[MS Coupled-Line Filter with stubs](/RF/Filters/BPF/QW_Coupled_Lines_w_stubs_BPF_o5_5GHz_500MHz_prj/index)| BPF |5000 MHz|BW = 400 MHz. RO4003C.|
+|[RF.F.05](/RF/Filters/LPF/Stepped-Z_LPF_o5_2GHz_prj/index) |[MS Stepped-Z LPF](/RF/Filters/LPF/Stepped-Z_LPF_o5_2GHz_prj/index)| LPF |2000 MHz|RO4003C|
+|[RF.F.06](/RF/Filters/BSF/QW_Lines_BSF_5GHz_prj/index) |[MS Quarter-Wave BSF](/RF/Filters/BSF/QW_Lines_BSF_5GHz_prj/index)|BSF |5000 MHz|RO4003C|
+|[RF.F.07](/RF/Filters/HPF/Lumped_HPF_2_GHz_prj/index) |[Lumped HPF with printed inductors](/RF/Filters/HPF/Lumped_HPF_2_GHz_prj/index)|HPF|2000 MHz|RO4003C|
 
 
 
