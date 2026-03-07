@@ -262,6 +262,531 @@
 </section>
 </section>
 </section>
+<section id="update">
+<h3>Update</h3>
+<p>I have recently simulated this design using EMerge sofware. The results are very similar, but I had to do some adjustments in the geometry.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>MS models</p></th>
+<th class="head"><p>Sonnet Lite</p></th>
+<th class="head"><p>EMerge</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>L1</p></td>
+<td><p>8.93 mm</p></td>
+<td><p>8.93 mm</p></td>
+<td><p>8.93 mm</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>103 μm</p></td>
+<td><p>103 μm</p></td>
+<td><p><em>110 μm</em></p></td>
+</tr>
+<tr class="row-even"><td><p>W1</p></td>
+<td><p>760 μm</p></td>
+<td><p>760 μm</p></td>
+<td><p>760 μm</p></td>
+</tr>
+<tr class="row-odd"><td><p>L2</p></td>
+<td><p>8.78 mm</p></td>
+<td><p>8.78 mm</p></td>
+<td><p>8.78 mm</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>510 μm</p></td>
+<td><p>510 μm</p></td>
+<td><p><em>350 μm</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>W2</p></td>
+<td><p>1.08 mm</p></td>
+<td><p>1.09 mm</p></td>
+<td><p>1.1 mm</p></td>
+</tr>
+</tbody>
+</table>
+<p>This is the Python script for the EMerge simulation:</p>
+<div style="height: 300px; overflow-y: auto; border: 1px solid #ccc; border-radius: 6px;"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+</span><span id="line-2"><span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">'WebAgg'</span><span class="p">)</span>
+</span><span id="line-3"><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="line-4"><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>  <span class="c1"># Used to run the post-processing script</span>
+</span><span id="line-5"><span class="kn">import</span><span class="w"> </span><span class="nn">emerge</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">em</span>
+</span><span id="line-6"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="line-7"><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="line-8"><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-11"><span class="c1"># PROJECT NAME</span>
+</span><span id="line-12"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-13"><span class="n">project_name</span> <span class="o">=</span> <span class="s2">"Coupled-Line BPF 5000 MHz"</span>
+</span><span id="line-14">
+</span><span id="line-15"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-16"><span class="c1"># Unit definitions</span>
+</span><span id="line-17"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-18"><span class="n">mm</span>  <span class="o">=</span> <span class="mf">1e-3</span>         <span class="c1"># m</span>
+</span><span id="line-19"><span class="n">mil</span> <span class="o">=</span> <span class="mf">0.0254</span> <span class="o">*</span> <span class="n">mm</span>  <span class="c1"># meter per mil</span>
+</span><span id="line-20"><span class="n">MHz</span> <span class="o">=</span> <span class="mf">1e6</span>          <span class="c1"># Hz</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-23"><span class="c1"># Substrate / material</span>
+</span><span id="line-24"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-25"><span class="n">er</span>   <span class="o">=</span> <span class="mf">3.55</span>   <span class="c1"># RO4003C relative permittivity</span>
+</span><span id="line-26"><span class="n">th</span>   <span class="o">=</span> <span class="mf">0.508</span>  <span class="c1"># [mm] (20 mil) Substrate thickness</span>
+</span><span id="line-27"><span class="n">tand</span> <span class="o">=</span> <span class="mf">0.0029</span> <span class="c1"># Substrate loss tangent</span>
+</span><span id="line-28">
+</span><span id="line-29"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-30"><span class="c1"># Center frequency</span>
+</span><span id="line-31"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-32"><span class="n">f0_MHz</span> <span class="o">=</span> <span class="mi">5000</span>
+</span><span id="line-33"><span class="n">f0</span> <span class="o">=</span> <span class="n">f0_MHz</span> <span class="o">*</span> <span class="n">MHz</span>  <span class="c1"># centre frequency (Hz)</span>
+</span><span id="line-34">
+</span><span id="line-35">
+</span><span id="line-36"><span class="n">W50</span> <span class="o">=</span> <span class="mf">1.1</span>         <span class="c1"># [mm] Trace width for 50 Ω feed lines</span>
+</span><span id="line-37">
+</span><span id="line-38"><span class="n">W1</span>  <span class="o">=</span> <span class="mf">0.76</span>        <span class="c1"># [mm] Width of the first section ofcoupled lines</span>
+</span><span id="line-39"><span class="n">L1</span>  <span class="o">=</span> <span class="mf">8.93</span>        <span class="c1"># [mm] Length of the first section of coupled lines</span>
+</span><span id="line-40"><span class="n">S1</span>  <span class="o">=</span> <span class="mf">0.11</span>       <span class="c1"># [mm] Gap between the first section of coupled lines</span>
+</span><span id="line-41">
+</span><span id="line-42"><span class="n">W2</span>  <span class="o">=</span> <span class="mf">1.08</span>        <span class="c1"># [mm] Width of the second section of coupled lines</span>
+</span><span id="line-43"><span class="n">L2</span>  <span class="o">=</span> <span class="mf">8.78</span>        <span class="c1"># [mm] Length of the second section of coupled lines</span>
+</span><span id="line-44"><span class="n">S2</span>  <span class="o">=</span> <span class="mf">0.35</span>        <span class="c1"># [mm] Gap between the second section of coupled lines</span>
+</span><span id="line-45">
+</span><span id="line-46">
+</span><span id="line-47"><span class="n">Lfeed</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1"># [mm] Feed-line length</span>
+</span><span id="line-48">
+</span><span id="line-49"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-50"><span class="c1"># Simulation setup</span>
+</span><span id="line-51"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-52"><span class="n">model</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">Simulation</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
+</span><span id="line-53"><span class="n">model</span><span class="o">.</span><span class="n">check_version</span><span class="p">(</span><span class="s2">"2.3.0"</span><span class="p">)</span>
+</span><span id="line-54">
+</span><span id="line-55"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-56"><span class="c1"># Frequency sweep</span>
+</span><span id="line-57"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-58"><span class="n">f_start</span>  <span class="o">=</span> <span class="mi">2500</span>  <span class="o">*</span> <span class="n">MHz</span>
+</span><span id="line-59"><span class="n">f_stop</span>   <span class="o">=</span> <span class="mi">7500</span> <span class="o">*</span> <span class="n">MHz</span>
+</span><span id="line-60"><span class="n">n_points</span> <span class="o">=</span> <span class="mi">50</span>
+</span><span id="line-61">
+</span><span id="line-62"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-63"><span class="c1"># Material and PCB layouter</span>
+</span><span id="line-64"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-65"><span class="n">mat</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="n">er</span><span class="o">=</span><span class="n">er</span><span class="p">,</span> <span class="n">tand</span><span class="o">=</span><span class="n">tand</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"#488343"</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</span><span id="line-66"><span class="n">pcb</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">PCBNew</span><span class="p">(</span><span class="n">th</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">mm</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">mat</span><span class="p">)</span>
+</span><span id="line-67">
+</span><span id="line-68"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-69"><span class="c1"># Layout</span>
+</span><span id="line-70"><span class="c1">#</span>
+</span><span id="line-71"><span class="c1"># Coordinate conventions (same as single-box script):</span>
+</span><span id="line-72"><span class="c1">#   x  →  horizontal (port-to-port direction along the top/bottom rails)</span>
+</span><span id="line-73"><span class="c1">#   y  ↑  vertical   (between top and bottom rails)</span>
+</span><span id="line-74"><span class="c1">#</span>
+</span><span id="line-75"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-76"><span class="n">pcb_margin</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># [mm] Board margin on all sides</span>
+</span><span id="line-77">
+</span><span id="line-78"><span class="c1"># Port 1</span>
+</span><span id="line-79"><span class="n">x_P1</span> <span class="o">=</span> <span class="n">pcb_margin</span><span class="o">+</span><span class="n">W50</span><span class="o">/</span><span class="mi">2</span>
+</span><span id="line-80"><span class="n">y_P1</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="line-81">
+</span><span id="line-82"><span class="c1"># P1 input feed line</span>
+</span><span id="line-83"><span class="n">pcb</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">x_P1</span><span class="p">,</span> <span class="n">y_P1</span><span class="p">,</span> <span class="n">W50</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">straight</span><span class="p">(</span><span class="n">Lfeed</span><span class="p">)[</span><span class="s1">'p1'</span><span class="p">]</span>
+</span><span id="line-84">
+</span><span id="line-85"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-86"><span class="c1"># First pair of coupled lines</span>
+</span><span id="line-87">
+</span><span id="line-88"><span class="c1"># Top trace</span>
+</span><span id="line-89"><span class="n">x_first_section</span> <span class="o">=</span> <span class="n">x_P1</span> <span class="o">+</span> <span class="n">W50</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">W1</span><span class="o">/</span><span class="mi">2</span>
+</span><span id="line-90"><span class="n">pcb</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">x_first_section</span><span class="p">,</span> <span class="n">y_P1</span><span class="p">,</span> <span class="n">W1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">straight</span><span class="p">(</span><span class="n">L1</span><span class="p">)</span>
+</span><span id="line-91">
+</span><span id="line-92"><span class="c1"># Bottom trace</span>
+</span><span id="line-93"><span class="n">pcb</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">x_first_section</span> <span class="o">+</span> <span class="n">W1</span><span class="o">+</span><span class="n">S1</span><span class="p">,</span> <span class="n">y_P1</span><span class="p">,</span> <span class="n">W1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">straight</span><span class="p">(</span><span class="n">L1</span><span class="p">)</span>
+</span><span id="line-94">
+</span><span id="line-95"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-96">
+</span><span id="line-97"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-98"><span class="c1"># Second pair of coupled lines</span>
+</span><span id="line-99">
+</span><span id="line-100"><span class="c1"># Top trace</span>
+</span><span id="line-101"><span class="n">x_2nd_section</span> <span class="o">=</span> <span class="n">x_first_section</span> <span class="o">+</span> <span class="n">W1</span> <span class="o">+</span> <span class="n">S1</span> <span class="o">+</span> <span class="n">W2</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">W1</span><span class="o">/</span><span class="mi">2</span>
+</span><span id="line-102"><span class="n">y_2nd_section</span> <span class="o">=</span> <span class="n">y_P1</span> <span class="o">+</span> <span class="n">L1</span>
+</span><span id="line-103"><span class="n">pcb</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">x_2nd_section</span><span class="p">,</span> <span class="n">y_2nd_section</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">straight</span><span class="p">(</span><span class="n">L2</span><span class="p">)</span>
+</span><span id="line-104">
+</span><span id="line-105"><span class="c1"># Bottom trace</span>
+</span><span id="line-106"><span class="n">pcb</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">x_2nd_section</span> <span class="o">+</span> <span class="n">W2</span> <span class="o">+</span> <span class="n">S2</span><span class="p">,</span> <span class="n">y_2nd_section</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">straight</span><span class="p">(</span><span class="n">L2</span><span class="p">)</span>
+</span><span id="line-107">
+</span><span id="line-108"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-109">
+</span><span id="line-110"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-111"><span class="c1"># Third pair of coupled lines</span>
+</span><span id="line-112">
+</span><span id="line-113"><span class="c1"># Top trace</span>
+</span><span id="line-114"><span class="n">x_3rd_section</span> <span class="o">=</span> <span class="n">x_2nd_section</span> <span class="o">+</span> <span class="n">W2</span> <span class="o">+</span> <span class="n">S2</span>
+</span><span id="line-115"><span class="n">y_3rd_section</span> <span class="o">=</span> <span class="n">y_2nd_section</span> <span class="o">+</span> <span class="n">L2</span>
+</span><span id="line-116"><span class="n">pcb</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">x_3rd_section</span><span class="p">,</span> <span class="n">y_3rd_section</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">straight</span><span class="p">(</span><span class="n">L2</span><span class="p">)</span>
+</span><span id="line-117">
+</span><span id="line-118"><span class="c1"># Bottom trace</span>
+</span><span id="line-119"><span class="n">pcb</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">x_3rd_section</span> <span class="o">+</span> <span class="n">W2</span> <span class="o">+</span> <span class="n">S2</span><span class="p">,</span> <span class="n">y_3rd_section</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">straight</span><span class="p">(</span><span class="n">L2</span><span class="p">)</span>
+</span><span id="line-120">
+</span><span id="line-121"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-122">
+</span><span id="line-123"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-124"><span class="c1"># Fourth pair of coupled lines</span>
+</span><span id="line-125">
+</span><span id="line-126"><span class="c1"># Top trace</span>
+</span><span id="line-127"><span class="n">x_4th_section</span> <span class="o">=</span> <span class="n">x_3rd_section</span> <span class="o">+</span> <span class="n">W2</span> <span class="o">+</span> <span class="n">S2</span> <span class="o">+</span> <span class="n">W2</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">W1</span><span class="o">/</span><span class="mi">2</span>
+</span><span id="line-128"><span class="n">y_4th_section</span> <span class="o">=</span> <span class="n">y_3rd_section</span> <span class="o">+</span> <span class="n">L2</span>
+</span><span id="line-129"><span class="n">pcb</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">x_4th_section</span><span class="p">,</span> <span class="n">y_4th_section</span><span class="p">,</span> <span class="n">W1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">straight</span><span class="p">(</span><span class="n">L1</span><span class="p">)</span>
+</span><span id="line-130">
+</span><span id="line-131"><span class="c1"># Bottom trace</span>
+</span><span id="line-132"><span class="n">pcb</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">x_4th_section</span> <span class="o">+</span> <span class="n">W1</span> <span class="o">+</span> <span class="n">S1</span><span class="p">,</span> <span class="n">y_4th_section</span><span class="p">,</span> <span class="n">W1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">straight</span><span class="p">(</span><span class="n">L1</span><span class="p">)</span>
+</span><span id="line-133">
+</span><span id="line-134"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-135">
+</span><span id="line-136"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-137"><span class="c1"># Output port feed line</span>
+</span><span id="line-138">
+</span><span id="line-139"><span class="n">x_out_feed</span> <span class="o">=</span> <span class="n">x_4th_section</span> <span class="o">+</span> <span class="n">W1</span> <span class="o">+</span> <span class="n">S1</span> <span class="o">+</span> <span class="n">W50</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">W1</span><span class="o">/</span><span class="mi">2</span>
+</span><span id="line-140"><span class="n">y_out_feed</span> <span class="o">=</span> <span class="n">y_4th_section</span> <span class="o">+</span> <span class="n">L1</span>
+</span><span id="line-141"><span class="n">pcb</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">x_out_feed</span><span class="p">,</span> <span class="n">y_out_feed</span><span class="p">,</span> <span class="n">W50</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">straight</span><span class="p">(</span><span class="n">Lfeed</span><span class="p">)[</span><span class="s1">'p2'</span><span class="p">]</span>
+</span><span id="line-142">
+</span><span id="line-143"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-144">
+</span><span id="line-145"><span class="n">BPF</span> <span class="o">=</span> <span class="n">pcb</span><span class="o">.</span><span class="n">compile_paths</span><span class="p">(</span><span class="n">merge</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-146">
+</span><span id="line-147"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-148"><span class="c1"># Bounding box, dielectric and air</span>
+</span><span id="line-149"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-150"><span class="n">pcb</span><span class="o">.</span><span class="n">determine_bounds</span><span class="p">(</span><span class="n">leftmargin</span><span class="o">=</span><span class="n">pcb_margin</span><span class="p">,</span> <span class="n">rightmargin</span><span class="o">=</span><span class="n">pcb_margin</span><span class="p">)</span>
+</span><span id="line-151"><span class="n">diel</span> <span class="o">=</span> <span class="n">pcb</span><span class="o">.</span><span class="n">generate_pcb</span><span class="p">()</span>
+</span><span id="line-152"><span class="n">air</span>  <span class="o">=</span> <span class="n">pcb</span><span class="o">.</span><span class="n">generate_air</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">th</span><span class="p">)</span>
+</span><span id="line-153">
+</span><span id="line-154"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-155"><span class="c1"># Modal ports</span>
+</span><span id="line-156"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-157"><span class="n">p1</span> <span class="o">=</span> <span class="n">pcb</span><span class="o">.</span><span class="n">modal_port</span><span class="p">(</span><span class="n">pcb</span><span class="p">[</span><span class="s1">'p1'</span><span class="p">],</span> <span class="n">width_multiplier</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4</span> <span class="o">*</span> <span class="n">th</span><span class="p">)</span>
+</span><span id="line-158"><span class="n">p2</span> <span class="o">=</span> <span class="n">pcb</span><span class="o">.</span><span class="n">modal_port</span><span class="p">(</span><span class="n">pcb</span><span class="p">[</span><span class="s1">'p2'</span><span class="p">],</span> <span class="n">width_multiplier</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4</span> <span class="o">*</span> <span class="n">th</span><span class="p">)</span>
+</span><span id="line-159">
+</span><span id="line-160"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-161"><span class="c1"># Solver settings</span>
+</span><span id="line-162"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-163"><span class="n">model</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">set_resolution</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+</span><span id="line-164"><span class="n">model</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">set_frequency_range</span><span class="p">(</span><span class="n">f_start</span><span class="p">,</span> <span class="n">f_stop</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span>
+</span><span id="line-165">
+</span><span id="line-166"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-167"><span class="c1"># Assemble geometry</span>
+</span><span id="line-168"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-169"><span class="n">model</span><span class="o">.</span><span class="n">commit_geometry</span><span class="p">()</span>
+</span><span id="line-170">
+</span><span id="line-171"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-172"><span class="c1"># Mesh refinement</span>
+</span><span id="line-173"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-174"><span class="n">model</span><span class="o">.</span><span class="n">mesher</span><span class="o">.</span><span class="n">set_boundary_size</span><span class="p">(</span><span class="n">BPF</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">mm</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="line-175"><span class="n">model</span><span class="o">.</span><span class="n">mesher</span><span class="o">.</span><span class="n">set_face_size</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">mm</span><span class="p">)</span>
+</span><span id="line-176"><span class="n">model</span><span class="o">.</span><span class="n">mesher</span><span class="o">.</span><span class="n">set_face_size</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">mm</span><span class="p">)</span>
+</span><span id="line-177">
+</span><span id="line-178"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-179"><span class="c1"># Mesh generation and visualisation</span>
+</span><span id="line-180"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-181"><span class="n">model</span><span class="o">.</span><span class="n">generate_mesh</span><span class="p">()</span>
+</span><span id="line-182"><span class="n">model</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">plot_mesh</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-183">
+</span><span id="line-184"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-185"><span class="c1"># Boundary conditions</span>
+</span><span id="line-186"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-187"><span class="n">port1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">bc</span><span class="o">.</span><span class="n">ModalPort</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s1">'TEM'</span><span class="p">)</span>
+</span><span id="line-188"><span class="n">port2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">bc</span><span class="o">.</span><span class="n">ModalPort</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s1">'TEM'</span><span class="p">)</span>
+</span><span id="line-189">
+</span><span id="line-190"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-191"><span class="c1"># Run solver</span>
+</span><span id="line-192"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-193"><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span><span id="line-194"><span class="n">data</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">run_sweep</span><span class="p">(</span><span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">frequency_groups</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</span><span id="line-195"><span class="n">run_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span>
+</span><span id="line-196"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Simulation completed in </span><span class="si">{</span><span class="n">run_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> minutes"</span><span class="p">)</span>
+</span><span id="line-197">
+</span><span id="line-198"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-199"><span class="c1"># Extract S-parameters (raw solver points)</span>
+</span><span id="line-200"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-201"><span class="n">grid</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">scalar</span><span class="o">.</span><span class="n">grid</span>
+</span><span id="line-202"><span class="n">f</span>    <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">freq</span>
+</span><span id="line-203">
+</span><span id="line-204"><span class="n">S11</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="line-205"><span class="n">S21</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="line-206"><span class="n">S22</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="line-207">
+</span><span id="line-208"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-209"><span class="c1"># Vector fitting — supersampled plot</span>
+</span><span id="line-210"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-211"><span class="n">n_supersamples</span> <span class="o">=</span> <span class="mi">2001</span>
+</span><span id="line-212"><span class="n">f_fit</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">f_start</span><span class="p">,</span> <span class="n">f_stop</span><span class="p">,</span> <span class="n">n_supersamples</span><span class="p">)</span>
+</span><span id="line-213"><span class="n">f_MHz</span>  <span class="o">=</span> <span class="n">f_fit</span> <span class="o">/</span> <span class="mf">1e6</span>  <span class="c1"># Scale for displaying the graphs</span>
+</span><span id="line-214">
+</span><span id="line-215"><span class="n">S11_fit</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">model_S</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">f_fit</span><span class="p">)</span>
+</span><span id="line-216"><span class="n">S21_fit</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">model_S</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">f_fit</span><span class="p">)</span>
+</span><span id="line-217"><span class="n">S22_fit</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">model_S</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">f_fit</span><span class="p">)</span>
+</span><span id="line-218">
+</span><span id="line-219"><span class="n">phase_S21</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">S21_fit</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># phase response</span>
+</span><span id="line-220">
+</span><span id="line-221"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-222"><span class="c1"># 3-D field visualisation at f0</span>
+</span><span id="line-223"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-224"><span class="n">field</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="n">f0</span><span class="p">)</span>
+</span><span id="line-225">
+</span><span id="line-226"><span class="n">model</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">diel</span><span class="p">)</span>
+</span><span id="line-227"><span class="n">model</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">BPF</span><span class="p">)</span>
+</span><span id="line-228"><span class="n">model</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">add_portmode</span><span class="p">(</span><span class="n">port1</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">field</span><span class="o">.</span><span class="n">k0</span><span class="p">)</span>
+</span><span id="line-229"><span class="n">model</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">add_portmode</span><span class="p">(</span><span class="n">port2</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">field</span><span class="o">.</span><span class="n">k0</span><span class="p">)</span>
+</span><span id="line-230"><span class="n">model</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+</span><span id="line-231">    <span class="n">field</span><span class="o">.</span><span class="n">cutplane</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">mm</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">th</span> <span class="o">*</span> <span class="n">mm</span><span class="p">)</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s1">'Ez'</span><span class="p">,</span> <span class="s1">'real'</span><span class="p">),</span>
+</span><span id="line-232">    <span class="n">symmetrize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="line-233"><span class="p">)</span>
+</span><span id="line-234"><span class="n">model</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span><span id="line-235">
+</span><span id="line-236"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-237"><span class="c1"># Export Touchstone</span>
+</span><span id="line-238"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-239"><span class="n">comments</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="line-240">    <span class="sa">f</span><span class="s2">"--- </span><span class="si">{</span><span class="n">project_name</span><span class="si">}</span><span class="s2"> ---"</span><span class="p">,</span>
+</span><span id="line-241">    <span class="s2">"Substrate: RO4003C"</span><span class="p">,</span>
+</span><span id="line-242">    <span class="sa">f</span><span class="s2">"h = </span><span class="si">{</span><span class="n">th</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">,</span>
+</span><span id="line-243">    <span class="sa">f</span><span class="s2">"W50 = </span><span class="si">{</span><span class="n">W50</span><span class="si">}</span><span class="s2"> mm, Lfeed = </span><span class="si">{</span><span class="n">Lfeed</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">,</span>
+</span><span id="line-244">    <span class="sa">f</span><span class="s2">"L1 = </span><span class="si">{</span><span class="n">L1</span><span class="si">}</span><span class="s2"> mm, S1 = </span><span class="si">{</span><span class="n">S1</span><span class="si">}</span><span class="s2"> mm, W1 = </span><span class="si">{</span><span class="n">W1</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">,</span>
+</span><span id="line-245">    <span class="sa">f</span><span class="s2">"L2 = </span><span class="si">{</span><span class="n">L1</span><span class="si">}</span><span class="s2"> mm, S2 = </span><span class="si">{</span><span class="n">S1</span><span class="si">}</span><span class="s2"> mm, W2 = </span><span class="si">{</span><span class="n">W2</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">,</span>
+</span><span id="line-246">    <span class="sa">f</span><span class="s2">"Run time = </span><span class="si">{</span><span class="n">run_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> min"</span><span class="p">,</span>
+</span><span id="line-247"><span class="p">]</span>
+</span><span id="line-248">
+</span><span id="line-249"><span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">_%H-%M-%S"</span><span class="p">)</span>
+</span><span id="line-250"><span class="n">grid</span><span class="o">.</span><span class="n">export_touchstone</span><span class="p">(</span><span class="n">project_name</span> <span class="o">+</span> <span class="s2">"_EMerge_"</span> <span class="o">+</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">custom_comments</span><span class="o">=</span><span class="n">comments</span><span class="p">)</span>
+</span><span id="line-251">
+</span><span id="line-252"><span class="c1"># Save data for post-processing</span>
+</span><span id="line-253"><span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span>
+</span><span id="line-254">    <span class="n">project_name</span> <span class="o">+</span> <span class="s2">"_data.npz"</span><span class="p">,</span>
+</span><span id="line-255">    <span class="c1"># S-parameters</span>
+</span><span id="line-256">    <span class="n">f</span><span class="o">=</span><span class="n">f_fit</span><span class="p">,</span> <span class="n">S11</span><span class="o">=</span><span class="n">S11_fit</span><span class="p">,</span> <span class="n">S21</span><span class="o">=</span><span class="n">S21_fit</span><span class="p">,</span> <span class="n">S22</span><span class="o">=</span><span class="n">S22_fit</span><span class="p">,</span>
+</span><span id="line-257">    <span class="n">phase_S21</span><span class="o">=</span><span class="n">phase_S21</span><span class="p">,</span>
+</span><span id="line-258">    <span class="c1"># Substrate</span>
+</span><span id="line-259">    <span class="n">er</span><span class="o">=</span><span class="n">er</span><span class="p">,</span> <span class="n">th</span><span class="o">=</span><span class="n">th</span><span class="p">,</span> <span class="n">tand</span><span class="o">=</span><span class="n">tand</span><span class="p">,</span>
+</span><span id="line-260">    <span class="c1"># Trace widths</span>
+</span><span id="line-261">    <span class="n">W50</span><span class="o">=</span><span class="n">W50</span><span class="p">,</span> <span class="n">Lfeed</span><span class="o">=</span><span class="n">Lfeed</span><span class="p">,</span>
+</span><span id="line-262">    <span class="c1"># Coupled lines 1 and 4</span>
+</span><span id="line-263">    <span class="n">L1</span><span class="o">=</span><span class="n">L1</span><span class="p">,</span> <span class="n">W1</span><span class="o">=</span><span class="n">W1</span><span class="p">,</span> <span class="n">S1</span><span class="o">=</span><span class="n">S1</span><span class="p">,</span>
+</span><span id="line-264">    <span class="c1">#Coupled lines 2 and 3</span>
+</span><span id="line-265">    <span class="n">L2</span><span class="o">=</span><span class="n">L2</span><span class="p">,</span> <span class="n">W2</span><span class="o">=</span><span class="n">W2</span><span class="p">,</span> <span class="n">S2</span><span class="o">=</span><span class="n">S2</span><span class="p">,</span>
+</span><span id="line-266">    <span class="c1"># Frequency sweep</span>
+</span><span id="line-267">    <span class="n">f0_MHz</span><span class="o">=</span><span class="n">f0_MHz</span><span class="p">,</span> <span class="n">f_start_MHz</span><span class="o">=</span><span class="n">f_start</span><span class="o">/</span><span class="n">MHz</span><span class="p">,</span> <span class="n">f_stop_MHz</span><span class="o">=</span><span class="n">f_stop</span><span class="o">/</span><span class="n">MHz</span><span class="p">,</span>
+</span><span id="line-268">    <span class="c1"># Run metadata</span>
+</span><span id="line-269">    <span class="n">run_time</span><span class="o">=</span><span class="n">run_time</span><span class="p">,</span>
+</span><span id="line-270"><span class="p">)</span>
+</span><span id="line-271">
+</span><span id="line-272"><span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"python"</span><span class="p">,</span> <span class="s2">"postprocessing.py"</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</div><p>and this is the script for post-processing:</p>
+<div style="height: 300px; overflow-y: auto; border: 1px solid #ccc; border-radius: 6px;"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+</span><span id="line-3"><span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">'Agg'</span><span class="p">)</span>   <span class="c1"># no display backend needed</span>
+</span><span id="line-4"><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="line-5"><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.backends.backend_pdf</span><span class="w"> </span><span class="kn">import</span> <span class="n">PdfPages</span>
+</span><span id="line-6"><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+</span><span id="line-7"><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+</span><span id="line-8"><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="line-9"><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+</span><span id="line-10">
+</span><span id="line-11"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-12"><span class="c1"># Load saved data</span>
+</span><span id="line-13"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-14"><span class="n">project_name</span> <span class="o">=</span> <span class="s2">"Coupled-Line BPF 5000 MHz"</span>
+</span><span id="line-15"><span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">_%H-%M-%S"</span><span class="p">)</span>
+</span><span id="line-16">
+</span><span id="line-17"><span class="n">pdf_filename</span>  <span class="o">=</span> <span class="n">project_name</span> <span class="o">+</span> <span class="n">timestamp</span> <span class="o">+</span> <span class="s2">"_report.pdf"</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">project_name</span> <span class="o">+</span> <span class="s2">"_data.npz"</span><span class="p">)</span>
+</span><span id="line-20">
+</span><span id="line-21"><span class="n">f</span>          <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">'f'</span><span class="p">]</span>
+</span><span id="line-22"><span class="n">S11</span>        <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">'S11'</span><span class="p">]</span>
+</span><span id="line-23"><span class="n">S21</span>        <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">'S21'</span><span class="p">]</span>
+</span><span id="line-24"><span class="n">S22</span>        <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">'S22'</span><span class="p">]</span>
+</span><span id="line-25"><span class="n">phase_S21</span>  <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">'phase_S21'</span><span class="p">]</span>
+</span><span id="line-26">
+</span><span id="line-27"><span class="n">f_MHz</span> <span class="o">=</span> <span class="n">f</span> <span class="o">/</span> <span class="mf">1e6</span>
+</span><span id="line-28">
+</span><span id="line-29"><span class="c1"># Markers</span>
+</span><span id="line-30">
+</span><span id="line-31"><span class="c1"># Center frequecny</span>
+</span><span id="line-32"><span class="n">f0</span>    <span class="o">=</span> <span class="mi">5000</span>   <span class="c1"># centre frequency (MHz)</span>
+</span><span id="line-33"><span class="n">idx_f0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f_MHz</span> <span class="o">-</span> <span class="n">f0</span><span class="p">))</span>
+</span><span id="line-34">
+</span><span id="line-35"><span class="c1"># Bottom corner frequecny</span>
+</span><span id="line-36"><span class="n">f_m1</span>    <span class="o">=</span> <span class="mi">4800</span>   <span class="c1"># centre frequency (MHz)</span>
+</span><span id="line-37"><span class="n">idx_f_m1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f_MHz</span> <span class="o">-</span> <span class="n">f_m1</span><span class="p">))</span>
+</span><span id="line-38">
+</span><span id="line-39"><span class="c1"># Top corner frequecny</span>
+</span><span id="line-40"><span class="n">f_m2</span>    <span class="o">=</span> <span class="mi">5200</span>   <span class="c1"># centre frequency (MHz)</span>
+</span><span id="line-41"><span class="n">idx_f_m2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f_MHz</span> <span class="o">-</span> <span class="n">f_m2</span><span class="p">))</span>
+</span><span id="line-42">
+</span><span id="line-43">
+</span><span id="line-44"><span class="k">def</span><span class="w"> </span><span class="nf">dB</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span><span id="line-45">    <span class="k">return</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-30</span><span class="p">)</span>
+</span><span id="line-46">
+</span><span id="line-47">
+</span><span id="line-48"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-49"><span class="c1"># Figure 0: Design variables — plain table</span>
+</span><span id="line-50"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-51"><span class="n">rows</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="line-52">    <span class="p">(</span><span class="s2">"Substrate"</span><span class="p">,</span>        <span class="s2">"RO4003C"</span><span class="p">),</span>
+</span><span id="line-53">    <span class="p">(</span><span class="s2">"er"</span><span class="p">,</span>               <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'er'</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">),</span>
+</span><span id="line-54">    <span class="p">(</span><span class="s2">"h"</span><span class="p">,</span>                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'th'</span><span class="p">])</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">),</span>
+</span><span id="line-55">    <span class="p">(</span><span class="s2">"tan d"</span><span class="p">,</span>            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'tand'</span><span class="p">])</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">),</span>
+</span><span id="line-56">    <span class="p">(</span><span class="s2">"W50"</span><span class="p">,</span>              <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'W50'</span><span class="p">])</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">),</span>
+</span><span id="line-57">    <span class="p">(</span><span class="s2">"L1"</span><span class="p">,</span>               <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'L1'</span><span class="p">])</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">),</span>
+</span><span id="line-58">    <span class="p">(</span><span class="s2">"W1"</span><span class="p">,</span>               <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'W1'</span><span class="p">])</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">),</span>
+</span><span id="line-59">    <span class="p">(</span><span class="s2">"S1"</span><span class="p">,</span>               <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'S1'</span><span class="p">])</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">),</span>
+</span><span id="line-60">    <span class="p">(</span><span class="s2">"L2"</span><span class="p">,</span>               <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'L2'</span><span class="p">])</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">),</span>
+</span><span id="line-61">    <span class="p">(</span><span class="s2">"W2"</span><span class="p">,</span>               <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'W2'</span><span class="p">])</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">),</span>
+</span><span id="line-62">    <span class="p">(</span><span class="s2">"S2"</span><span class="p">,</span>               <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'S2'</span><span class="p">])</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">),</span>
+</span><span id="line-63">    <span class="p">(</span><span class="s2">"Lfeed"</span><span class="p">,</span>           <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'Lfeed'</span><span class="p">])</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">),</span>
+</span><span id="line-64">    <span class="p">(</span><span class="s2">"f0"</span><span class="p">,</span>               <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'f0_MHz'</span><span class="p">])</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> MHz"</span><span class="p">),</span>
+</span><span id="line-65">    <span class="p">(</span><span class="s2">"Sweep"</span><span class="p">,</span>            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'f_start_MHz'</span><span class="p">])</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> – </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'f_stop_MHz'</span><span class="p">])</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> MHz"</span><span class="p">),</span>
+</span><span id="line-66">    <span class="p">(</span><span class="s2">"Simulation time"</span><span class="p">,</span>        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'run_time'</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> min"</span><span class="p">),</span>
+</span><span id="line-67"><span class="p">]</span>
+</span><span id="line-68">
+</span><span id="line-69"><span class="n">fig0</span><span class="p">,</span> <span class="n">ax0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.35</span> <span class="o">+</span> <span class="mf">0.4</span><span class="p">))</span>
+</span><span id="line-70"><span class="n">ax0</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+</span><span id="line-71"><span class="n">tbl</span> <span class="o">=</span> <span class="n">ax0</span><span class="o">.</span><span class="n">table</span><span class="p">(</span>
+</span><span id="line-72">    <span class="n">cellText</span><span class="o">=</span><span class="p">[[</span><span class="n">p</span><span class="p">,</span> <span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">],</span>
+</span><span id="line-73">    <span class="n">colLabels</span><span class="o">=</span><span class="p">[</span><span class="s2">"Parameter"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">],</span>
+</span><span id="line-74">    <span class="n">colWidths</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span>
+</span><span id="line-75">    <span class="n">loc</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span>
+</span><span id="line-76">    <span class="n">cellLoc</span><span class="o">=</span><span class="s1">'left'</span><span class="p">,</span>
+</span><span id="line-77"><span class="p">)</span>
+</span><span id="line-78"><span class="n">tbl</span><span class="o">.</span><span class="n">auto_set_font_size</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="line-79"><span class="n">tbl</span><span class="o">.</span><span class="n">set_fontsize</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+</span><span id="line-80"><span class="n">tbl</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">)</span>
+</span><span id="line-81">
+</span><span id="line-82"><span class="c1"># Style header row</span>
+</span><span id="line-83"><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="line-84">    <span class="n">tbl</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">col</span><span class="p">)]</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'#2e4a7a'</span><span class="p">)</span>
+</span><span id="line-85">    <span class="n">tbl</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">col</span><span class="p">)]</span><span class="o">.</span><span class="n">set_text_props</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'white'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
+</span><span id="line-86">
+</span><span id="line-87"><span class="c1"># Alternating row shading</span>
+</span><span id="line-88"><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="line-89">    <span class="n">fc</span> <span class="o">=</span> <span class="s1">'#eef2f9'</span> <span class="k">if</span> <span class="n">row</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">'white'</span>
+</span><span id="line-90">    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="line-91">        <span class="n">tbl</span><span class="p">[(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)]</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+</span><span id="line-92">        <span class="n">tbl</span><span class="p">[(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)]</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">'#cccccc'</span><span class="p">)</span>
+</span><span id="line-93">
+</span><span id="line-94"><span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">project_name</span><span class="si">}</span><span class="se">\n</span><span class="s1">Design Variables'</span><span class="p">,</span>
+</span><span id="line-95">              <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</span><span id="line-96"><span class="n">fig0</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span><span id="line-97">
+</span><span id="line-98">
+</span><span id="line-99"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-100"><span class="c1"># Figure 1: S-parameter magnitudes</span>
+</span><span id="line-101"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-102"><span class="n">fig1</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span><span id="line-103"><span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_MHz</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">S11</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">'S11 (return loss)'</span><span class="p">,</span>           <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'b'</span><span class="p">)</span>
+</span><span id="line-104"><span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_MHz</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">S21</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">'S21'</span><span class="p">,</span>              <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'r'</span><span class="p">)</span>
+</span><span id="line-105"><span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">f0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'f0 = </span><span class="si">{</span><span class="n">f0</span><span class="si">}</span><span class="s1"> MHz'</span><span class="p">)</span>
+</span><span id="line-106"><span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">f_m1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'f = </span><span class="si">{</span><span class="n">f_m1</span><span class="si">}</span><span class="s1"> MHz'</span><span class="p">)</span>
+</span><span id="line-107"><span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">f_m2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'f = </span><span class="si">{</span><span class="n">f_m2</span><span class="si">}</span><span class="s1"> MHz'</span><span class="p">)</span>
+</span><span id="line-108">
+</span><span id="line-109"><span class="n">mkr_S21</span> <span class="o">=</span> <span class="n">dB</span><span class="p">(</span><span class="n">S21</span><span class="p">)[</span><span class="n">idx_f_m1</span><span class="p">]</span>
+</span><span id="line-110"><span class="n">ax1</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">'IL = </span><span class="si">{</span><span class="n">mkr_S21</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> dB'</span><span class="p">,</span>
+</span><span id="line-111">             <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">f_m1</span><span class="p">,</span> <span class="n">mkr_S21</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">f_m1</span> <span class="o">-</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">mkr_S21</span> <span class="o">-</span> <span class="mi">5</span><span class="p">),</span>
+</span><span id="line-112">             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">'-&gt;'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="line-113">
+</span><span id="line-114"><span class="n">mkr_S21</span> <span class="o">=</span> <span class="n">dB</span><span class="p">(</span><span class="n">S21</span><span class="p">)[</span><span class="n">idx_f_m2</span><span class="p">]</span>
+</span><span id="line-115"><span class="n">ax1</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">'IL = </span><span class="si">{</span><span class="n">mkr_S21</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> dB'</span><span class="p">,</span>
+</span><span id="line-116">             <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">f_m2</span><span class="p">,</span> <span class="n">mkr_S21</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">f_m2</span> <span class="o">+</span> <span class="mi">500</span><span class="p">,</span> <span class="n">mkr_S21</span> <span class="o">-</span> <span class="mi">5</span><span class="p">),</span>
+</span><span id="line-117">             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">'-&gt;'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="line-118">
+</span><span id="line-119">
+</span><span id="line-120"><span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Frequency [MHz]'</span><span class="p">)</span>
+</span><span id="line-121"><span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Magnitude [dB]'</span><span class="p">)</span>
+</span><span id="line-122"><span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">project_name</span><span class="si">}</span><span class="s1"> - S-parameters'</span><span class="p">)</span>
+</span><span id="line-123"><span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="line-124"><span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">f_MHz</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f_MHz</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="line-125"><span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span><span id="line-126"><span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</span><span id="line-127"><span class="n">fig1</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span><span id="line-128">
+</span><span id="line-129">
+</span><span id="line-130"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-131"><span class="c1"># Figure 2: S-parameter magnitudes. Passband detail</span>
+</span><span id="line-132"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-133"><span class="n">fig2</span><span class="p">,</span> <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span><span id="line-134"><span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_MHz</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">S21</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">'S21'</span><span class="p">,</span>              <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'r'</span><span class="p">)</span>
+</span><span id="line-135"><span class="n">ax2</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">f0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'f = </span><span class="si">{</span><span class="n">f0</span><span class="si">}</span><span class="s1"> MHz'</span><span class="p">)</span>
+</span><span id="line-136"><span class="n">ax2</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">f_m1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'f = </span><span class="si">{</span><span class="n">f_m1</span><span class="si">}</span><span class="s1"> MHz'</span><span class="p">)</span>
+</span><span id="line-137"><span class="n">ax2</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">f_m2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'f = </span><span class="si">{</span><span class="n">f_m2</span><span class="si">}</span><span class="s1"> MHz'</span><span class="p">)</span>
+</span><span id="line-138">
+</span><span id="line-139"><span class="n">mkr_S21</span> <span class="o">=</span> <span class="n">dB</span><span class="p">(</span><span class="n">S21</span><span class="p">)[</span><span class="n">idx_f0</span><span class="p">]</span>
+</span><span id="line-140"><span class="n">ax2</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">'IL = </span><span class="si">{</span><span class="n">mkr_S21</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> dB'</span><span class="p">,</span>
+</span><span id="line-141">             <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">f0</span><span class="p">,</span> <span class="n">mkr_S21</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">f0</span><span class="p">,</span> <span class="n">mkr_S21</span> <span class="o">-</span> <span class="mi">2</span><span class="p">),</span>
+</span><span id="line-142">             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">'-&gt;'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="line-143">
+</span><span id="line-144"><span class="n">mkr_S21</span> <span class="o">=</span> <span class="n">dB</span><span class="p">(</span><span class="n">S21</span><span class="p">)[</span><span class="n">idx_f_m1</span><span class="p">]</span>
+</span><span id="line-145"><span class="n">ax2</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">'IL = </span><span class="si">{</span><span class="n">mkr_S21</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> dB'</span><span class="p">,</span>
+</span><span id="line-146">             <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">f_m1</span><span class="p">,</span> <span class="n">mkr_S21</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">f_m1</span> <span class="o">-</span> <span class="mi">200</span><span class="p">,</span> <span class="n">mkr_S21</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+</span><span id="line-147">             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">'-&gt;'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="line-148">
+</span><span id="line-149"><span class="n">mkr_S21</span> <span class="o">=</span> <span class="n">dB</span><span class="p">(</span><span class="n">S21</span><span class="p">)[</span><span class="n">idx_f_m2</span><span class="p">]</span>
+</span><span id="line-150"><span class="n">ax2</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">'IL = </span><span class="si">{</span><span class="n">mkr_S21</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> dB'</span><span class="p">,</span>
+</span><span id="line-151">             <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">f_m2</span><span class="p">,</span> <span class="n">mkr_S21</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">f_m2</span> <span class="o">+</span> <span class="mi">200</span><span class="p">,</span> <span class="n">mkr_S21</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+</span><span id="line-152">             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">'-&gt;'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="line-153">
+</span><span id="line-154">
+</span><span id="line-155"><span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Frequency [MHz]'</span><span class="p">)</span>
+</span><span id="line-156"><span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Magnitude [dB]'</span><span class="p">)</span>
+</span><span id="line-157"><span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">project_name</span><span class="si">}</span><span class="s1"> - S-parameters'</span><span class="p">)</span>
+</span><span id="line-158"><span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="line-159">
+</span><span id="line-160"><span class="c1"># Graph limits</span>
+</span><span id="line-161"><span class="n">x_start</span> <span class="o">=</span> <span class="mi">4500</span>
+</span><span id="line-162"><span class="n">x_stop</span> <span class="o">=</span> <span class="mi">5500</span>
+</span><span id="line-163">
+</span><span id="line-164"><span class="n">ax2</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="line-165"><span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_start</span><span class="p">,</span> <span class="n">x_stop</span><span class="p">)</span>
+</span><span id="line-166"><span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span><span id="line-167"><span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</span><span id="line-168"><span class="n">fig2</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span><span id="line-169">
+</span><span id="line-170"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-171"><span class="c1"># Save to PDF and open it</span>
+</span><span id="line-172"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span id="line-173"><span class="k">with</span> <span class="n">PdfPages</span><span class="p">(</span><span class="n">pdf_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">pdf</span><span class="p">:</span>
+</span><span id="line-174">    <span class="n">pdf</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fig0</span><span class="p">)</span>
+</span><span id="line-175">    <span class="n">pdf</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fig1</span><span class="p">)</span>
+</span><span id="line-176">    <span class="n">pdf</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fig2</span><span class="p">)</span>
+</span><span id="line-177">    <span class="n">meta</span> <span class="o">=</span> <span class="n">pdf</span><span class="o">.</span><span class="n">infodict</span><span class="p">()</span>
+</span><span id="line-178">    <span class="n">meta</span><span class="p">[</span><span class="s1">'Title'</span><span class="p">]</span>   <span class="o">=</span> <span class="n">project_name</span>
+</span><span id="line-179">    <span class="n">meta</span><span class="p">[</span><span class="s1">'Subject'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'EM simulation results - double-box branch-line coupler'</span>
+</span><span id="line-180">
+</span><span id="line-181"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"PDF saved -&gt; </span><span class="si">{</span><span class="n">pdf_filename</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="line-182">
+</span><span id="line-183"><span class="c1"># Open the PDF with the system default viewer</span>
+</span><span id="line-184"><span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'linux'</span><span class="p">):</span>
+</span><span id="line-185">    <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">'xdg-open'</span><span class="p">,</span> <span class="n">pdf_filename</span><span class="p">])</span>
+</span><span id="line-186"><span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">'darwin'</span><span class="p">:</span>
+</span><span id="line-187">    <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">'open'</span><span class="p">,</span> <span class="n">pdf_filename</span><span class="p">])</span>
+</span><span id="line-188"><span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">'win32'</span><span class="p">:</span>
+</span><span id="line-189">    <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">'start'</span><span class="p">,</span> <span class="n">pdf_filename</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</div><p>The results are shown below:</p>
+<figure class="align-default" id="id9">
+<img alt="../../../../_images/4_1_Broadband.png" class="with-border" src="../../../../_images/4_1_Broadband.png"/>
+<figcaption>
+<p><span class="caption-text">EM simulation results from EMerge. Broadband response.</span></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id10">
+<img alt="../../../../_images/4_2_Passband.png" class="with-border" src="../../../../_images/4_2_Passband.png"/>
+<figcaption>
+<p><span class="caption-text">EM simulation results from EMerge. Passband detail.</span></p>
+</figcaption>
+</figure>
+</section>
 </section>
 </section>
 </div><div class="flex justify-between items-center pt-6 mt-12 border-t border-border gap-4">
@@ -281,6 +806,7 @@
 </li>
 </ul>
 </li>
+<li><a :data-current="activeSection === '#update'" class="reference internal" href="#update">Update</a></li>
 </ul>
 </li>
 </ul>

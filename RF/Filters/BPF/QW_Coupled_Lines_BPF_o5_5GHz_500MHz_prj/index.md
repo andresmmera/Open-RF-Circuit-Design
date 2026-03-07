@@ -128,3 +128,61 @@ class: with-border
 
 Comparison between the results obtained in Sonnet Lite and Qucsator
 ```
+
+
+### Update
+
+I have recently simulated this design using EMerge sofware. The results are very similar, but I had to do some adjustments in the geometry.
+
+|Parameter|MS models|Sonnet Lite| EMerge
+|---|---|---|---|
+|L1|8.93 mm|8.93 mm|8.93 mm|
+|S1|103 μm|103 μm|*110 μm*|
+|W1|760 μm|760 μm|760 μm|
+|L2|8.78 mm|8.78 mm|8.78 mm|
+|S2|510 μm|510 μm|*350 μm*|
+|W2|1.08 mm|1.09 mm|1.1 mm|
+
+This is the Python script for the EMerge simulation:
+
+```{raw} html
+<div style="height: 300px; overflow-y: auto; border: 1px solid #ccc; border-radius: 6px;">
+```
+```{literalinclude} EMerge Scripts/2 - Fine Tuning/BPF.py
+:language: python
+```
+```{raw} html
+</div>
+```
+
+and this is the script for post-processing:
+
+```{raw} html
+<div style="height: 300px; overflow-y: auto; border: 1px solid #ccc; border-radius: 6px;">
+```
+```{literalinclude} EMerge Scripts/2 - Fine Tuning/postprocessing.py
+:language: python
+```
+```{raw} html
+</div>
+```
+
+
+The results are shown below:
+
+```{figure} images/4_EMerge/4_1_Broadband.png
+---
+class: with-border
+---
+
+EM simulation results from EMerge. Broadband response.
+```
+
+
+```{figure} images/4_EMerge/4_2_Passband.png
+---
+class: with-border
+---
+
+EM simulation results from EMerge. Passband detail.
+```

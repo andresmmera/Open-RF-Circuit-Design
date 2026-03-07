@@ -6,6 +6,8 @@ This repository showcases self-learning projects in electronics and RF engineeri
 
 While my primary interest is RF engineering, this repo also includes general electronics designs. Bug reports or improvement ideas are appreciated.
 
+Do you want to build this page locally? [See this](/Build_the_docs)
+
 
 ### Open-Source RF Engineering Software
 
@@ -49,3 +51,6 @@ The examples in this repo use the following tools:
 |--- |---------------------|-------------|
 |[GE.01](/General_Electronics/PWM_as_DAC_prj/index) |[How to use a PWM output to get an analog voltage](/General_Electronics/PWM_as_DAC_prj/index)|Get an analog voltage from a microcontroller PWM output|
 |[GE.02](/General_Electronics/MOSFET_switch_prj/index) |[How to use a MOSFET as a switch](/General_Electronics/MOSFET_switch_prj/index)|Use NMOSFETs or PMOSFETs as low-side or high-side switches|
+
+
+
