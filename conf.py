@@ -21,6 +21,8 @@ author = 'Andrés Martínez Mera'
 extensions = [
     'myst_parser',
     'sphinx.ext.githubpages',
+    'sphinx_datatables',
+    "sphinxcontrib.jquery",
     #'sphinx-tags',
 ]
 
